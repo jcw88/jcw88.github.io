@@ -23,7 +23,7 @@
 - NoKR : No KR
 - LOVE : SetLV
 - Random Attack mode : Intro and Final won't
-- ADHD : the red heart never stops - letting a key go keeps the speed, left+right (or up+down) together picks a side at random, and diagonals still move diagonally
+- ADHD : the heart never stops - letting a key go keeps the speed, it bounces off the walls, steering on one axis drops whatever the other was doing, and a diagonal needs a key from each axis held together. The blue soul gets it left and right only
 - FPS : Set FPS(Affects Damage and Player Speed)
 
 #### Custom attacks
@@ -61,7 +61,7 @@
 - NoKR : 当你漏掉了一只怪(没有KR了) 
 - LOVE : 设置LOVE 
 - Random Attack : 每次攻击随机，开头和结尾不变
-- ADHD(多动症模式) : 红心一直动，松开方向键不清速度，同时按左右/上下会随机选一个方向，斜向按法照样走斜边
+- ADHD(多动症模式) : 心一直动，松开方向键不清速度，碰墙反弹，按一个轴的方向键会清掉另一个轴的速度，只有同时按住两个轴的键才走斜边。同时按左右/上下会随机选一个方向。蓝魂只有左右
 - FPS : 改FPS,这会影响Boss伤害，玩家移速等
 
 #### 自定义攻击

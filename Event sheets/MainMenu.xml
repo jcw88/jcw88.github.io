@@ -1091,6 +1091,10 @@
                         </condition>
                     </conditions>
                     <actions>
+                        <action id="6" name="Pop" sid="8960000000000000" type="MenuStack">
+                            <param id="0" name="Where">0</param>
+                            <param id="1" name="Axis">0</param>
+                        </action>
                         <action id="17" name="Execute Javascript" sid="8920000000000008" type="Browser">
                             <param id="0" name="Javascript">"window.BadTimeAttackMaker.open();"</param>
                         </action>

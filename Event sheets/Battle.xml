@@ -4372,6 +4372,73 @@
                                 </event-block>
                             </sub-events>
                         </event-block>
+                        <event-block sid="8940000000000050">
+                            <conditions>
+                                <condition id="-8" name="Compare two values" sid="8940000000000052" type="System">
+                                    <param id="0" name="First value">Browser.QueryParam("ADHD")</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Second value">"ON"</param>
+                                </condition>
+                                <condition id="-7" name="Compare instance variable" sid="8940000000000054" type="PlayerHeart">
+                                    <param id="0" name="Instance variable">Mode</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">HEARTMODE_RED</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                            <event-block sid="8940000000000036">
+                                <conditions>
+                                <condition behavior="CustomMovement" id="1" name="Compare speed" sid="8940000000000028" type="PlayerHeart">
+                                    <param id="0" name="Which">1</param>
+                                    <param id="1" name="Comparison">2</param>
+                                    <param id="2" name="Speed">0</param>
+                                </condition>
+                                </conditions>
+                                <actions>
+                                <action behavior="CustomMovement" id="2" name="Set speed" sid="8940000000000030" type="PlayerHeart">
+                                    <param id="0" name="Which">1</param>
+                                    <param id="1" name="Speed">-PlayerHeart.CustomMovement.dx</param>
+                                </action>
+                                <action id="-1" name="Set X" sid="8940000000000032" type="PlayerHeart">
+                                    <param id="0" name="X">PlayerHeart.X + 1</param>
+                                </action>
+                                <action behavior="CustomMovement" id="7" name="Stop stepping" sid="8940000000000034" type="PlayerHeart">
+                                    <param id="0" name="Which">0</param>
+                                </action>
+                                </actions>
+                            </event-block>
+                            <event-block sid="8940000000000048">
+                                <conditions>
+                                <condition id="-22" name="Else" sid="8940000000000038" type="System" />
+                                <condition behavior="CustomMovement" id="1" name="Compare speed" sid="8940000000000040" type="PlayerHeart">
+                                    <param id="0" name="Which">1</param>
+                                    <param id="1" name="Comparison">4</param>
+                                    <param id="2" name="Speed">0</param>
+                                </condition>
+                                </conditions>
+                                <actions>
+                                <action behavior="CustomMovement" id="2" name="Set speed" sid="8940000000000042" type="PlayerHeart">
+                                    <param id="0" name="Which">1</param>
+                                    <param id="1" name="Speed">-PlayerHeart.CustomMovement.dx</param>
+                                </action>
+                                <action id="-1" name="Set X" sid="8940000000000044" type="PlayerHeart">
+                                    <param id="0" name="X">PlayerHeart.X - 1</param>
+                                </action>
+                                <action behavior="CustomMovement" id="7" name="Stop stepping" sid="8940000000000046" type="PlayerHeart">
+                                    <param id="0" name="Which">0</param>
+                                </action>
+                                </actions>
+                            </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="8940000000000056">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="8940000000000058" type="System" />
+                            </conditions>
+                            <actions />
+                            <sub-events>
+
                         <event-block sid="8142884415598524">
                             <conditions>
                                 <condition behavior="CustomMovement" id="1" name="Compare speed" sid="9907373652531428" type="PlayerHeart">
@@ -4408,7 +4475,8 @@
                                 </action>
                             </actions>
                         </event-block>
-                    </sub-events>
+                                                </sub-events>
+                        </event-block>                    </sub-events>
                 </event-block>
                 <event-block sid="3410576752030205">
                     <conditions>
@@ -4483,6 +4551,73 @@
                                 </event-block>
                             </sub-events>
                         </event-block>
+                        <event-block sid="8940000000000082">
+                            <conditions>
+                                <condition id="-8" name="Compare two values" sid="8940000000000084" type="System">
+                                    <param id="0" name="First value">Browser.QueryParam("ADHD")</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Second value">"ON"</param>
+                                </condition>
+                                <condition id="-7" name="Compare instance variable" sid="8940000000000086" type="PlayerHeart">
+                                    <param id="0" name="Instance variable">Mode</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">HEARTMODE_RED</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                            <event-block sid="8940000000000068">
+                                <conditions>
+                                <condition behavior="CustomMovement" id="1" name="Compare speed" sid="8940000000000060" type="PlayerHeart">
+                                    <param id="0" name="Which">2</param>
+                                    <param id="1" name="Comparison">2</param>
+                                    <param id="2" name="Speed">0</param>
+                                </condition>
+                                </conditions>
+                                <actions>
+                                <action behavior="CustomMovement" id="2" name="Set speed" sid="8940000000000062" type="PlayerHeart">
+                                    <param id="0" name="Which">2</param>
+                                    <param id="1" name="Speed">-PlayerHeart.CustomMovement.dy</param>
+                                </action>
+                                <action id="-2" name="Set Y" sid="8940000000000064" type="PlayerHeart">
+                                    <param id="0" name="Y">PlayerHeart.Y + 1</param>
+                                </action>
+                                <action behavior="CustomMovement" id="7" name="Stop stepping" sid="8940000000000066" type="PlayerHeart">
+                                    <param id="0" name="Which">0</param>
+                                </action>
+                                </actions>
+                            </event-block>
+                            <event-block sid="8940000000000080">
+                                <conditions>
+                                <condition id="-22" name="Else" sid="8940000000000070" type="System" />
+                                <condition behavior="CustomMovement" id="1" name="Compare speed" sid="8940000000000072" type="PlayerHeart">
+                                    <param id="0" name="Which">2</param>
+                                    <param id="1" name="Comparison">4</param>
+                                    <param id="2" name="Speed">0</param>
+                                </condition>
+                                </conditions>
+                                <actions>
+                                <action behavior="CustomMovement" id="2" name="Set speed" sid="8940000000000074" type="PlayerHeart">
+                                    <param id="0" name="Which">2</param>
+                                    <param id="1" name="Speed">-PlayerHeart.CustomMovement.dy</param>
+                                </action>
+                                <action id="-2" name="Set Y" sid="8940000000000076" type="PlayerHeart">
+                                    <param id="0" name="Y">PlayerHeart.Y - 1</param>
+                                </action>
+                                <action behavior="CustomMovement" id="7" name="Stop stepping" sid="8940000000000078" type="PlayerHeart">
+                                    <param id="0" name="Which">0</param>
+                                </action>
+                                </actions>
+                            </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="8940000000000088">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="8940000000000090" type="System" />
+                            </conditions>
+                            <actions />
+                            <sub-events>
+
                         <event-block sid="9108500818525514">
                             <conditions>
                                 <condition behavior="CustomMovement" id="1" name="Compare speed" sid="6244415694329169" type="PlayerHeart">
@@ -4519,7 +4654,8 @@
                                 </action>
                             </actions>
                         </event-block>
-                    </sub-events>
+                                                </sub-events>
+                        </event-block>                    </sub-events>
                 </event-block>
                 <event-block sid="1229121055144974">
                     <conditions>
@@ -4851,6 +4987,80 @@
                         </event-block>
                     </sub-events>
                 </event-block>
+                        <event-block any="1" sid="8940000000000008">
+                            <conditions>
+                                <condition id="-7" name="Compare instance variable" sid="8940000000000010" type="VPad">
+                                    <param id="0" name="Instance variable">Left</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">1</param>
+                                </condition>
+                                <condition id="-7" name="Compare instance variable" sid="8940000000000012" type="VPad">
+                                    <param id="0" name="Instance variable">Right</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">1</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                            <event-block sid="8940000000000006">
+                                <conditions>
+                                <condition id="-7" name="Compare instance variable" sid="8940000000000000" type="VPad">
+                                    <param id="0" name="Instance variable">Up</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                                <condition id="-7" name="Compare instance variable" sid="8940000000000002" type="VPad">
+                                    <param id="0" name="Instance variable">Down</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                                </conditions>
+                                <actions>
+                                <action behavior="CustomMovement" id="2" name="Set speed" sid="8940000000000004" type="PlayerHeart">
+                                    <param id="0" name="Which">2</param>
+                                    <param id="1" name="Speed">0</param>
+                                </action>
+                                </actions>
+                            </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block any="1" sid="8940000000000022">
+                            <conditions>
+                                <condition id="-7" name="Compare instance variable" sid="8940000000000024" type="VPad">
+                                    <param id="0" name="Instance variable">Up</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">1</param>
+                                </condition>
+                                <condition id="-7" name="Compare instance variable" sid="8940000000000026" type="VPad">
+                                    <param id="0" name="Instance variable">Down</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">1</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                            <event-block sid="8940000000000020">
+                                <conditions>
+                                <condition id="-7" name="Compare instance variable" sid="8940000000000014" type="VPad">
+                                    <param id="0" name="Instance variable">Left</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                                <condition id="-7" name="Compare instance variable" sid="8940000000000016" type="VPad">
+                                    <param id="0" name="Instance variable">Right</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                                </conditions>
+                                <actions>
+                                <action behavior="CustomMovement" id="2" name="Set speed" sid="8940000000000018" type="PlayerHeart">
+                                    <param id="0" name="Which">1</param>
+                                    <param id="1" name="Speed">0</param>
+                                </action>
+                                </actions>
+                            </event-block>
+                            </sub-events>
+                        </event-block>
                 </sub-events>
                     </event-block>
                 <event-block sid="4272043091444084">
@@ -5300,6 +5510,11 @@
                                 <event-block sid="9232010070302832">
                                     <conditions>
                                         <condition id="-1" name="Every tick" sid="1220066627448464" type="System" />
+                                        <condition id="-8" name="Compare two values" sid="8970000000000000" type="System">
+                                            <param id="0" name="First value">Browser.QueryParam("ADHD")</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Second value">"ON"</param>
+                                        </condition>
                                     </conditions>
                                     <actions>
                                         <action behavior="CustomMovement" id="2" name="Set speed" sid="9831439999687661" type="PlayerHeart">
@@ -5333,6 +5548,11 @@
                                             <param id="0" name="Instance variable">Up</param>
                                             <param id="1" name="Comparison">1</param>
                                             <param id="2" name="Value">VPad.Down</param>
+                                        </condition>
+                                        <condition id="-8" name="Compare two values" sid="8970000000000002" type="System">
+                                            <param id="0" name="First value">Browser.QueryParam("ADHD")</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Second value">"ON"</param>
                                         </condition>
                                     </conditions>
                                     <actions />
@@ -5369,6 +5589,95 @@
                                         </event-block>
                                     </sub-events>
                                 </event-block>
+                                <event-block sid="8970000000000034">
+                                    <conditions>
+                                        <condition id="-8" name="Compare two values" sid="8970000000000036" type="System">
+                                            <param id="0" name="First value">Browser.QueryParam("ADHD")</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Second value">"ON"</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                    <sub-events>
+                                        <event-block sid="8970000000000010">
+                                            <conditions>
+                                            <condition id="-7" name="Compare instance variable" sid="8970000000000004" type="VPad">
+                                                <param id="0" name="Instance variable">Up</param>
+                                                <param id="1" name="Comparison">0</param>
+                                                <param id="2" name="Value">1</param>
+                                            </condition>
+                                            <condition id="-7" name="Compare instance variable" sid="8970000000000006" type="VPad">
+                                                <param id="0" name="Instance variable">Down</param>
+                                                <param id="1" name="Comparison">0</param>
+                                                <param id="2" name="Value">0</param>
+                                            </condition>
+                                            </conditions>
+                                            <actions>
+                                            <action behavior="CustomMovement" id="2" name="Set speed" sid="8970000000000008" type="PlayerHeart">
+                                                <param id="0" name="Which">2</param>
+                                                <param id="1" name="Speed">-HeartSpeed</param>
+                                            </action>
+                                            </actions>
+                                        </event-block>
+                                        <event-block sid="8970000000000018">
+                                            <conditions>
+                                            <condition id="-7" name="Compare instance variable" sid="8970000000000012" type="VPad">
+                                                <param id="0" name="Instance variable">Down</param>
+                                                <param id="1" name="Comparison">0</param>
+                                                <param id="2" name="Value">1</param>
+                                            </condition>
+                                            <condition id="-7" name="Compare instance variable" sid="8970000000000014" type="VPad">
+                                                <param id="0" name="Instance variable">Up</param>
+                                                <param id="1" name="Comparison">0</param>
+                                                <param id="2" name="Value">0</param>
+                                            </condition>
+                                            </conditions>
+                                            <actions>
+                                            <action behavior="CustomMovement" id="2" name="Set speed" sid="8970000000000016" type="PlayerHeart">
+                                                <param id="0" name="Which">2</param>
+                                                <param id="1" name="Speed">HeartSpeed</param>
+                                            </action>
+                                            </actions>
+                                        </event-block>
+                                        <event-block sid="8970000000000020">
+                                            <conditions>
+                                                <condition id="-7" name="Compare instance variable" sid="8970000000000022" type="VPad">
+                                                    <param id="0" name="Instance variable">Up</param>
+                                                    <param id="1" name="Comparison">0</param>
+                                                    <param id="2" name="Value">1</param>
+                                                </condition>
+                                                <condition id="-7" name="Compare instance variable" sid="8970000000000024" type="VPad">
+                                                    <param id="0" name="Instance variable">Down</param>
+                                                    <param id="1" name="Comparison">0</param>
+                                                    <param id="2" name="Value">1</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions />
+                                            <sub-events>
+                                                <event-block any="1" sid="8970000000000026">
+                                                    <conditions>
+                                                        <condition id="-7" name="Compare instance variable" sid="8970000000000028" type="VPad">
+                                                            <param id="0" name="Instance variable">LastUp</param>
+                                                            <param id="1" name="Comparison">0</param>
+                                                            <param id="2" name="Value">0</param>
+                                                        </condition>
+                                                        <condition id="-7" name="Compare instance variable" sid="8970000000000030" type="VPad">
+                                                            <param id="0" name="Instance variable">LastDown</param>
+                                                            <param id="1" name="Comparison">0</param>
+                                                            <param id="2" name="Value">0</param>
+                                                        </condition>
+                                                    </conditions>
+                                                    <actions>
+                                                        <action behavior="CustomMovement" id="2" name="Set speed" sid="8970000000000032" type="PlayerHeart">
+                                                            <param id="0" name="Which">2</param>
+                                                            <param id="1" name="Speed">choose(-HeartSpeed, HeartSpeed)</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                            </sub-events>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
                             </sub-events>
                         </event-block>
                         <comment>Sideways movement when gravity is up or down</comment>
@@ -5388,6 +5697,11 @@
                                 <event-block sid="3647594051341909">
                                     <conditions>
                                         <condition id="-1" name="Every tick" sid="1903228498503528" type="System" />
+                                        <condition id="-8" name="Compare two values" sid="8970000000000038" type="System">
+                                            <param id="0" name="First value">Browser.QueryParam("ADHD")</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Second value">"ON"</param>
+                                        </condition>
                                     </conditions>
                                     <actions>
                                         <action behavior="CustomMovement" id="2" name="Set speed" sid="4383527768039812" type="PlayerHeart">
@@ -5485,6 +5799,11 @@
                                             <param id="1" name="Comparison">1</param>
                                             <param id="2" name="Value">VPad.Right</param>
                                         </condition>
+                                        <condition id="-8" name="Compare two values" sid="8970000000000040" type="System">
+                                            <param id="0" name="First value">Browser.QueryParam("ADHD")</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Second value">"ON"</param>
+                                        </condition>
                                     </conditions>
                                     <actions />
                                     <sub-events>
@@ -5517,6 +5836,95 @@
                                                     <param id="1" name="Speed">PlayerHeart.CustomMovement.dx + HEARTSPEED</param>
                                                 </action>
                                             </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                                <event-block sid="8970000000000072">
+                                    <conditions>
+                                        <condition id="-8" name="Compare two values" sid="8970000000000074" type="System">
+                                            <param id="0" name="First value">Browser.QueryParam("ADHD")</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Second value">"ON"</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                    <sub-events>
+                                        <event-block sid="8970000000000048">
+                                            <conditions>
+                                            <condition id="-7" name="Compare instance variable" sid="8970000000000042" type="VPad">
+                                                <param id="0" name="Instance variable">Left</param>
+                                                <param id="1" name="Comparison">0</param>
+                                                <param id="2" name="Value">1</param>
+                                            </condition>
+                                            <condition id="-7" name="Compare instance variable" sid="8970000000000044" type="VPad">
+                                                <param id="0" name="Instance variable">Right</param>
+                                                <param id="1" name="Comparison">0</param>
+                                                <param id="2" name="Value">0</param>
+                                            </condition>
+                                            </conditions>
+                                            <actions>
+                                            <action behavior="CustomMovement" id="2" name="Set speed" sid="8970000000000046" type="PlayerHeart">
+                                                <param id="0" name="Which">1</param>
+                                                <param id="1" name="Speed">-HeartSpeed</param>
+                                            </action>
+                                            </actions>
+                                        </event-block>
+                                        <event-block sid="8970000000000056">
+                                            <conditions>
+                                            <condition id="-7" name="Compare instance variable" sid="8970000000000050" type="VPad">
+                                                <param id="0" name="Instance variable">Right</param>
+                                                <param id="1" name="Comparison">0</param>
+                                                <param id="2" name="Value">1</param>
+                                            </condition>
+                                            <condition id="-7" name="Compare instance variable" sid="8970000000000052" type="VPad">
+                                                <param id="0" name="Instance variable">Left</param>
+                                                <param id="1" name="Comparison">0</param>
+                                                <param id="2" name="Value">0</param>
+                                            </condition>
+                                            </conditions>
+                                            <actions>
+                                            <action behavior="CustomMovement" id="2" name="Set speed" sid="8970000000000054" type="PlayerHeart">
+                                                <param id="0" name="Which">1</param>
+                                                <param id="1" name="Speed">HeartSpeed</param>
+                                            </action>
+                                            </actions>
+                                        </event-block>
+                                        <event-block sid="8970000000000058">
+                                            <conditions>
+                                                <condition id="-7" name="Compare instance variable" sid="8970000000000060" type="VPad">
+                                                    <param id="0" name="Instance variable">Left</param>
+                                                    <param id="1" name="Comparison">0</param>
+                                                    <param id="2" name="Value">1</param>
+                                                </condition>
+                                                <condition id="-7" name="Compare instance variable" sid="8970000000000062" type="VPad">
+                                                    <param id="0" name="Instance variable">Right</param>
+                                                    <param id="1" name="Comparison">0</param>
+                                                    <param id="2" name="Value">1</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions />
+                                            <sub-events>
+                                                <event-block any="1" sid="8970000000000064">
+                                                    <conditions>
+                                                        <condition id="-7" name="Compare instance variable" sid="8970000000000066" type="VPad">
+                                                            <param id="0" name="Instance variable">LastLeft</param>
+                                                            <param id="1" name="Comparison">0</param>
+                                                            <param id="2" name="Value">0</param>
+                                                        </condition>
+                                                        <condition id="-7" name="Compare instance variable" sid="8970000000000068" type="VPad">
+                                                            <param id="0" name="Instance variable">LastRight</param>
+                                                            <param id="1" name="Comparison">0</param>
+                                                            <param id="2" name="Value">0</param>
+                                                        </condition>
+                                                    </conditions>
+                                                    <actions>
+                                                        <action behavior="CustomMovement" id="2" name="Set speed" sid="8970000000000070" type="PlayerHeart">
+                                                            <param id="0" name="Which">1</param>
+                                                            <param id="1" name="Speed">choose(-HeartSpeed, HeartSpeed)</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                            </sub-events>
                                         </event-block>
                                     </sub-events>
                                 </event-block>
