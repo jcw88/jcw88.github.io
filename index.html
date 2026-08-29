@@ -81,6 +81,43 @@
 	<script src="jquery-3.4.1.min.js"></script>
 
 
+	<script>
+	(function () {
+		var params = new URLSearchParams(window.location.search);
+		var flag = params.get("SaBiMode") || params.get("sabimode") || params.get("sabi");
+		var enabled = /^(1|true|on|yes)$/i.test(flag || "");
+		window.SaBiMode = enabled;
+
+		if (!enabled)
+			return;
+
+		function rewriteAudioUrl(url) {
+			if (typeof url !== "string")
+				return url;
+
+			return url.replace(/(^|\/)media\/([^\/?#]+\.ogg)([?#].*)?$/i, "$1sabi_media/$2$3");
+		}
+
+		var originalOpen = XMLHttpRequest.prototype.open;
+		XMLHttpRequest.prototype.open = function (method, url) {
+			arguments[1] = rewriteAudioUrl(url);
+			return originalOpen.apply(this, arguments);
+		};
+
+		if (window.fetch) {
+			var originalFetch = window.fetch;
+			window.fetch = function (input, init) {
+				if (typeof input === "string")
+					input = rewriteAudioUrl(input);
+				else if (input && input.url)
+					input = new Request(rewriteAudioUrl(input.url), input);
+
+				return originalFetch.call(this, input, init);
+			};
+		}
+	})();
+	</script>
+
 	
     <!-- The runtime script.  You can rename it, but don't forget to rename the reference here as well.
     This file will have been minified and obfuscated if you enabled "Minify script" during export. -->
