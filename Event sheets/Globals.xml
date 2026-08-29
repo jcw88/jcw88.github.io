@@ -11,6 +11,7 @@
         <variable constant="1" name="MODE_PRACTICE" sid="631186454787328" static="0" type="number">3</variable>
         <variable constant="1" name="MODE_HARD" sid="9123456789012340" static="0" type="number">4</variable>
         <variable constant="0" name="SimulatorMode" sid="2567313271818781" static="0" type="number">0</variable>
+        <variable constant="0" name="DamageMultiplier" sid="9123456789012380" static="0" type="number">1</variable>
         <variable constant="0" name="EndlessStage" sid="1966297049622465" static="0" type="number">0</variable>
         <variable constant="0" name="PracticeTarget" sid="824857649224256" static="0" type="number">60</variable>
         <variable constant="0" name="SingleAttack" sid="9637412728316299" static="0" type="text"></variable>

@@ -173,6 +173,10 @@
                             <param id="0" name="Variable">SimulatorMode</param>
                             <param id="1" name="Value">MODE_NORMAL</param>
                         </action>
+                        <action id="-9" name="Set value" sid="9123456789012381" type="System">
+                            <param id="0" name="Variable">DamageMultiplier</param>
+                            <param id="1" name="Value">1</param>
+                        </action>
                         <action id="-2" name="Go to layout" sid="6921132940594369" type="System">
                             <param id="0" name="Layout">BattleScreen</param>
                         </action>
@@ -187,7 +191,11 @@
                     <actions>
                         <action id="-9" name="Set value" sid="9123456789012353" type="System">
                             <param id="0" name="Variable">SimulatorMode</param>
-                            <param id="1" name="Value">MODE_HARD</param>
+                            <param id="1" name="Value">MODE_NORMAL</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="9123456789012382" type="System">
+                            <param id="0" name="Variable">DamageMultiplier</param>
+                            <param id="1" name="Value">2</param>
                         </action>
                         <action id="-2" name="Go to layout" sid="9123456789012355" type="System">
                             <param id="0" name="Layout">BattleScreen</param>
@@ -204,6 +212,10 @@
                         <action id="-9" name="Set value" sid="430576558749824" type="System">
                             <param id="0" name="Variable">SimulatorMode</param>
                             <param id="1" name="Value">MODE_PRACTICE</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="9123456789012385" type="System">
+                            <param id="0" name="Variable">DamageMultiplier</param>
+                            <param id="1" name="Value">1</param>
                         </action>
                         <action id="-2" name="Go to layout" sid="198624542462292" type="System">
                             <param id="0" name="Layout">BattleScreen</param>
@@ -226,6 +238,10 @@
                         <action id="-9" name="Set value" sid="652672334406652" type="System">
                             <param id="0" name="Variable">SimulatorMode</param>
                             <param id="1" name="Value">MODE_ENDLESS</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="9123456789012386" type="System">
+                            <param id="0" name="Variable">DamageMultiplier</param>
+                            <param id="1" name="Value">1</param>
                         </action>
                     </actions>
                     <sub-events>
@@ -278,6 +294,10 @@
                         <action id="-9" name="Set value" sid="1371758894200221" type="System">
                             <param id="0" name="Variable">SimulatorMode</param>
                             <param id="1" name="Value">MODE_SINGLE</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="9123456789012387" type="System">
+                            <param id="0" name="Variable">DamageMultiplier</param>
+                            <param id="1" name="Value">1</param>
                         </action>
                         <action id="-3" name="Create object" sid="4719384433315021" type="System">
                             <param id="0" name="Object to create">DefaultFont</param>
@@ -369,6 +389,10 @@
                         <action id="-9" name="Set value" sid="9409175181526048" type="System">
                             <param id="0" name="Variable">SimulatorMode</param>
                             <param id="1" name="Value">MODE_SINGLE</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="9123456789012388" type="System">
+                            <param id="0" name="Variable">DamageMultiplier</param>
+                            <param id="1" name="Value">1</param>
                         </action>
                         <action id="0" name="Call function" sid="131065348070977" type="Function">
                             <param id="0" name="Name">"CreateMenuItem"</param>
@@ -591,6 +615,10 @@
                                                     <param id="0" name="Variable">SimulatorMode</param>
                                                     <param id="1" name="Value">MODE_NORMAL</param>
                                                 </action>
+                                                <action id="-9" name="Set value" sid="9123456789012383" type="System">
+                                                    <param id="0" name="Variable">DamageMultiplier</param>
+                                                    <param id="1" name="Value">1</param>
+                                                </action>
                                                 <action id="-2" name="Go to layout" sid="2250937489427595" type="System">
                                                     <param id="0" name="Layout">BattleScreen</param>
                                                 </action>
@@ -607,7 +635,11 @@
                                             <actions>
                                                 <action id="-9" name="Set value" sid="9123456789012372" type="System">
                                                     <param id="0" name="Variable">SimulatorMode</param>
-                                                    <param id="1" name="Value">MODE_HARD</param>
+                                                    <param id="1" name="Value">MODE_NORMAL</param>
+                                                </action>
+                                                <action id="-9" name="Set value" sid="9123456789012384" type="System">
+                                                    <param id="0" name="Variable">DamageMultiplier</param>
+                                                    <param id="1" name="Value">2</param>
                                                 </action>
                                                 <action id="-2" name="Go to layout" sid="9123456789012374" type="System">
                                                     <param id="0" name="Layout">BattleScreen</param>
@@ -626,6 +658,10 @@
                                                 <action id="-9" name="Set value" sid="2615427988409121" type="System">
                                                     <param id="0" name="Variable">SimulatorMode</param>
                                                     <param id="1" name="Value">MODE_ENDLESS</param>
+                                                </action>
+                                                <action id="-9" name="Set value" sid="9123456789012389" type="System">
+                                                    <param id="0" name="Variable">DamageMultiplier</param>
+                                                    <param id="1" name="Value">1</param>
                                                 </action>
                                                 <action id="-9" name="Set value" sid="3348766332315247" type="System">
                                                     <param id="0" name="Variable">EndlessStage</param>
@@ -648,6 +684,10 @@
                                                 <action id="-9" name="Set value" sid="6999416949166913" type="System">
                                                     <param id="0" name="Variable">SimulatorMode</param>
                                                     <param id="1" name="Value">MODE_ENDLESS</param>
+                                                </action>
+                                                <action id="-9" name="Set value" sid="9123456789012390" type="System">
+                                                    <param id="0" name="Variable">DamageMultiplier</param>
+                                                    <param id="1" name="Value">1</param>
                                                 </action>
                                                 <action id="-9" name="Set value" sid="474366002640576" type="System">
                                                     <param id="0" name="Variable">EndlessStage</param>
@@ -673,6 +713,10 @@
                                                 <action id="-9" name="Set value" sid="2855488460274073" type="System">
                                                     <param id="0" name="Variable">SimulatorMode</param>
                                                     <param id="1" name="Value">MODE_SINGLE</param>
+                                                </action>
+                                                <action id="-9" name="Set value" sid="9123456789012391" type="System">
+                                                    <param id="0" name="Variable">DamageMultiplier</param>
+                                                    <param id="1" name="Value">1</param>
                                                 </action>
                                                 <action id="-9" name="Set value" sid="5672583306802497" type="System">
                                                     <param id="0" name="Variable">SingleAttack</param>
