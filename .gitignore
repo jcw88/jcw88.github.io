@@ -1,0 +1,12 @@
+server_*.log
+start_server_*.py
+_remote_index_probe.html
+
+hardmode-*.png
+single-*.png
+spinblasters-*.png
+original-*.png
+
+music_backup_codex/
+sfx_backup_codex/
+web_codex_attempt/
