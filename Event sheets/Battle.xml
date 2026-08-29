@@ -83,6 +83,12 @@
                     <param id="0" name="Animation">"ClosedEyes"</param>
                     <param id="1" name="From">1</param>
                 </action>
+                <action id="17" name="Execute Javascript" sid="8980000000000000" type="Browser">
+                    <param id="0" name="Javascript">"window.BadTimeSettingsUI.reseed();"</param>
+                </action>
+                <action id="17" name="Execute Javascript" sid="8980000000000002" type="Browser">
+                    <param id="0" name="Javascript">"window.BadTimeTAS.setBattle(1);"</param>
+                </action>
             </actions>
             <sub-events>
                 <event-block sid="5660586456921061">

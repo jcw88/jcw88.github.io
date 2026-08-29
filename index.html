@@ -302,6 +302,8 @@
 			love: 19,
 			randomAttack: false,
 			adhd: false,
+			tas: false,
+			seed: 0,
 			fps: 60,
 			changeMusic: false,
 			changeSfx: false,
@@ -344,6 +346,8 @@
 			settings.randomAttack = readFlag("RandomAttack");
 		if (params.has("ADHD"))
 			settings.adhd = readFlag("ADHD");
+		if (params.has("TAS"))
+			settings.tas = readFlag("TAS");
 		if (params.has("SaBiMode") || params.has("sabimode") || params.has("sabi"))
 			settings.sabiMode = readFlag("SaBiMode") || readFlag("sabimode") || readFlag("sabi");
 		if (params.has("ChangeMusic"))
@@ -354,9 +358,12 @@
 			settings.love = clamp(params.get("LOVE"), 1, 99, settings.love);
 		if (params.has("FPS"))
 			settings.fps = clamp(params.get("FPS"), 10, 240, settings.fps);
+		if (params.has("Seed"))
+			settings.seed = clamp(params.get("Seed"), 0, 999999, settings.seed);
 
 		settings.love = clamp(settings.love, 1, 99, 19);
 		settings.fps = clamp(settings.fps, 10, 240, 60);
+		settings.seed = clamp(settings.seed, 0, 999999, 0);
 
 		window.BadTimeSettings = settings;
 		window.SaBiMode = settings.sabiMode;
@@ -379,6 +386,8 @@
 			url.searchParams.set("LOVE", String(settings.love));
 			url.searchParams.set("RandomAttack", settings.randomAttack ? "ON" : "OFF");
 			url.searchParams.set("ADHD", settings.adhd ? "ON" : "OFF");
+			url.searchParams.set("TAS", settings.tas ? "ON" : "OFF");
+			url.searchParams.set("Seed", String(settings.seed));
 			url.searchParams.set("FPS", String(settings.fps));
 			url.searchParams.set("SaBiMode", settings.sabiMode ? "ON" : "OFF");
 			url.searchParams.set("ChangeMusic", settings.changeMusic ? "ON" : "OFF");
@@ -412,6 +421,25 @@
 
 		applyUrl({ menu: params.get("menu") });
 
+		// ---- randomness -----------------------------------------------------
+		// Construct 2's random() and choose() both come off Math.random, so
+		// replacing it with a seeded generator makes every roll reproducible - which
+		// is what TAS mode needs, and what "pseudo random" means here.
+		var randomState = 0;
+
+		function reseed() {
+			randomState = (settings.seed + 0x9E3779B9) >>> 0;
+		}
+
+		Math.random = function () {
+			randomState = (randomState + 0x6D2B79F5) >>> 0;
+			var t = Math.imul(randomState ^ (randomState >>> 15), 1 | randomState);
+			t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+			return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+		};
+
+		reseed();
+
 		// ---- frame pacing ---------------------------------------------------
 		// The fight is dt driven, so handing the runtime a fixed 1/60s step and
 		// pacing the ticks ourselves is what makes the frame rate decide how fast
@@ -420,6 +448,7 @@
 		var nativeRaf = window.requestAnimationFrame && window.requestAnimationFrame.bind(window);
 		var nativeCancel = window.cancelAnimationFrame && window.cancelAnimationFrame.bind(window);
 		var pacedFrame = false;
+		var lastFrameMode = "native";
 		var frameClock = 0;
 		var frameDue = 0;
 		var frameStep = 1000 / 60;
@@ -436,7 +465,7 @@
 			return fps;
 		}
 
-		window.requestAnimationFrame = function (callback) {
+		function scheduleFrame(callback) {
 			if (effectiveFps() === 60 && nativeRaf) {
 				pacedFrame = false;
 				return nativeRaf(callback);
@@ -455,11 +484,118 @@
 			}, Math.max(0, frameDue - real));
 		};
 
+		// ---- TAS ------------------------------------------------------------
+		// While it holds the loop the runtime only gets a frame when ] asks for
+		// one, so whatever else is held down is what that frame sees.
+		var tas = { inBattle: false, pending: null, handle: 1, stepping: false, timer: 0, media: [] };
+
+		function tasHolding() {
+			return settings.tas && tas.inBattle;
+		}
+
+		function freezeMedia(element) {
+			try {
+				element.playbackRate = 0;
+			} catch (e) {
+				try { element.pause(); } catch (e2) {}
+			}
+		}
+
+		function thawMedia(element) {
+			try {
+				element.playbackRate = 1;
+				if (element.paused)
+					element.play();
+			} catch (e) {}
+		}
+
+		function stepMedia() {
+			tas.media.forEach(function (element) {
+				try {
+					if (!element.ended && element.readyState > 0)
+						element.currentTime += frameStep / 1000;
+				} catch (e) {}
+			});
+		}
+
+		function tasStep() {
+			if (!tasHolding() || !tas.pending || tas.stepping)
+				return;
+
+			tas.stepping = true;
+			var callback = tas.pending;
+			tas.pending = null;
+			frameClock = (frameClock || nowMs()) + frameStep;
+			stepMedia();
+			try {
+				callback(frameClock);
+			} finally {
+				tas.stepping = false;
+			}
+		}
+
+		// Music is an <audio> element running on its own clock; catch every one
+		// that starts so it can be walked forward a frame at a time instead.
+		if (window.HTMLMediaElement) {
+			var mediaPlay = HTMLMediaElement.prototype.play;
+			HTMLMediaElement.prototype.play = function () {
+				if (tas.media.indexOf(this) === -1)
+					tas.media.push(this);
+
+				var result = mediaPlay.apply(this, arguments);
+				if (tasHolding())
+					freezeMedia(this);
+				return result;
+			};
+		}
+
+		window.requestAnimationFrame = function (callback) {
+			if (tasHolding()) {
+				lastFrameMode = "tas";
+				tas.pending = callback;
+				return tas.handle++;
+			}
+
+			lastFrameMode = pacedFrame ? "timer" : "native";
+			var id = scheduleFrame(callback);
+			lastFrameMode = pacedFrame ? "timer" : "native";
+			return id;
+		};
+
 		window.cancelAnimationFrame = function (id) {
-			if (pacedFrame)
+			if (lastFrameMode === "tas")
+				tas.pending = null;
+			else if (lastFrameMode === "timer")
 				clearTimeout(id);
 			else if (nativeCancel)
 				nativeCancel(id);
+		};
+
+		function tasSync() {
+			if (tasHolding()) {
+				tas.media.forEach(freezeMedia);
+				return;
+			}
+
+			tas.media.forEach(thawMedia);
+			clearInterval(tas.timer);
+			tas.timer = 0;
+
+			// Hand any frame still waiting back to the normal loop, or it stops.
+			if (tas.pending) {
+				var callback = tas.pending;
+				tas.pending = null;
+				scheduleFrame(callback);
+			}
+		}
+
+		window.BadTimeTAS = {
+			setBattle: function (on) {
+				tas.inBattle = !!on;
+				tasSync();
+			},
+			step: tasStep,
+			isHolding: tasHolding
 		};
 
 		// ---- audio ----------------------------------------------------------
@@ -648,19 +784,47 @@
 		};
 
 		document.addEventListener("keydown", function (event) {
-			if (event.repeat || event.ctrlKey || event.altKey || event.metaKey)
+			if (event.ctrlKey || event.altKey || event.metaKey)
 				return;
 			if (window.BadTimeAttackMaker && window.BadTimeAttackMaker.isOpen())
 				return;
 			if (/^(input|textarea|select)$/i.test((event.target && event.target.tagName) || ""))
 				return;
 
+			if (event.keyCode === 221 && tasHolding()) {
+				event.preventDefault();
+				if (event.repeat)
+					return;   // the browser's repeat is far too quick, use our own
+
+				tasStep();
+				clearInterval(tas.timer);
+				tas.timer = setInterval(tasStep, 100);   // ten frames a second held
+				return;
+			}
+
+			if (event.repeat)
+				return;
 			var command = hotkeys[event.keyCode];
 			if (!command)
 				return;
 
 			event.preventDefault();
 			sendCommand(command);
+
+			// Frozen, the battle would never look at the command. Give it a few
+			// frames - enough for leaving to reach the menu, which thaws the loop.
+			if (tasHolding()) {
+				tasStep();
+				setTimeout(tasStep, 32);
+				setTimeout(tasStep, 64);
+			}
+		});
+
+		document.addEventListener("keyup", function (event) {
+			if (event.keyCode === 221) {
+				clearInterval(tas.timer);
+				tas.timer = 0;
+			}
 		});
 
 		// Called from the game (Browser: Execute Javascript).
@@ -694,6 +858,19 @@
 			toggleAdhd: function () {
 				toggle("adhd");
 			},
+			toggleTas: function () {
+				settings.tas = !settings.tas;
+				save();
+				applyUrl();
+				tasSync();
+			},
+			setSeed: function () {
+				settings.seed = ask("Random seed (0-999999)", settings.seed, 0, 999999);
+				save();
+				applyUrl();
+				reseed();
+			},
+			reseed: reseed,
 			setLove: function () {
 				settings.love = ask("LOVE (1-99)", settings.love, 1, 99);
 				save();
