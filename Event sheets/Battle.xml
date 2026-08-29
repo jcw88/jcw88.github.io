@@ -8047,7 +8047,7 @@
                         <condition id="-8" name="Compare two values" sid="9123456789012395" type="System">
                             <param id="0" name="First value">Browser.QueryParam("NoHit")</param>
                             <param id="1" name="Comparison">0</param>
-                            <param id="2" name="Second value">"1"</param>
+                            <param id="2" name="Second value">"ON"</param>
                         </condition>
                     </conditions>
                     <actions>
