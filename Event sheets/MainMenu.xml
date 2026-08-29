@@ -830,41 +830,45 @@
                         <action id="7" name="Set horizontal alignment" sid="8800000000000018" type="DefaultFont">
                             <param id="0" name="Horizontal alignment">1</param>
                         </action>
-                        <action id="0" name="Call function" sid="8840000000000226" type="Function">
+                        <action id="0" name="Call function" sid="8900000000000100" type="Function">
                             <param id="0" name="Name">"CreateMenuItem"</param>
                             <param id="1" name="Parameter {n}">0{###}192{###}96{###}0{###}"NoHit: " &amp; Browser.QueryParam("NoHit"){###}"MenuSettingsNoHit"</param>
                         </action>
-                        <action id="0" name="Call function" sid="8840000000000228" type="Function">
+                        <action id="0" name="Call function" sid="8900000000000102" type="Function">
                             <param id="0" name="Name">"CreateMenuItem"</param>
-                            <param id="1" name="Parameter {n}">0{###}192{###}128{###}1{###}"NoHeal: " &amp; Browser.QueryParam("NoHeal"){###}"MenuSettingsNoHeal"</param>
+                            <param id="1" name="Parameter {n}">0{###}192{###}128{###}1{###}"InfHP: " &amp; Browser.QueryParam("InfHP"){###}"MenuSettingsInfHP"</param>
                         </action>
-                        <action id="0" name="Call function" sid="8840000000000230" type="Function">
+                        <action id="0" name="Call function" sid="8900000000000104" type="Function">
                             <param id="0" name="Name">"CreateMenuItem"</param>
-                            <param id="1" name="Parameter {n}">0{###}192{###}160{###}2{###}"NoKR: " &amp; Browser.QueryParam("NoKR"){###}"MenuSettingsNoKR"</param>
+                            <param id="1" name="Parameter {n}">0{###}192{###}160{###}2{###}"NoHeal: " &amp; Browser.QueryParam("NoHeal"){###}"MenuSettingsNoHeal"</param>
                         </action>
-                        <action id="0" name="Call function" sid="8840000000000232" type="Function">
+                        <action id="0" name="Call function" sid="8900000000000106" type="Function">
                             <param id="0" name="Name">"CreateMenuItem"</param>
-                            <param id="1" name="Parameter {n}">0{###}192{###}192{###}3{###}"LOVE: " &amp; Browser.QueryParam("LOVE"){###}"MenuSettingsLove"</param>
+                            <param id="1" name="Parameter {n}">0{###}192{###}192{###}3{###}"NoKR: " &amp; Browser.QueryParam("NoKR"){###}"MenuSettingsNoKR"</param>
                         </action>
-                        <action id="0" name="Call function" sid="8840000000000234" type="Function">
+                        <action id="0" name="Call function" sid="8900000000000108" type="Function">
                             <param id="0" name="Name">"CreateMenuItem"</param>
-                            <param id="1" name="Parameter {n}">0{###}192{###}224{###}4{###}"Random attack: " &amp; Browser.QueryParam("RandomAttack"){###}"MenuSettingsRandom"</param>
+                            <param id="1" name="Parameter {n}">0{###}192{###}224{###}4{###}"LOVE: " &amp; Browser.QueryParam("LOVE"){###}"MenuSettingsLove"</param>
                         </action>
-                        <action id="0" name="Call function" sid="8840000000000236" type="Function">
+                        <action id="0" name="Call function" sid="8900000000000110" type="Function">
                             <param id="0" name="Name">"CreateMenuItem"</param>
-                            <param id="1" name="Parameter {n}">0{###}192{###}256{###}5{###}"FPS: " &amp; Browser.QueryParam("FPS"){###}"MenuSettingsFPS"</param>
+                            <param id="1" name="Parameter {n}">0{###}192{###}256{###}5{###}"Random attack: " &amp; Browser.QueryParam("RandomAttack"){###}"MenuSettingsRandom"</param>
                         </action>
-                        <action id="0" name="Call function" sid="8840000000000238" type="Function">
+                        <action id="0" name="Call function" sid="8900000000000112" type="Function">
                             <param id="0" name="Name">"CreateMenuItem"</param>
-                            <param id="1" name="Parameter {n}">0{###}192{###}288{###}6{###}"Custom music: " &amp; Browser.QueryParam("ChangeMusic"){###}"MenuSettingsMusic"</param>
+                            <param id="1" name="Parameter {n}">0{###}192{###}288{###}6{###}"FPS: " &amp; Browser.QueryParam("FPS"){###}"MenuSettingsFPS"</param>
                         </action>
-                        <action id="0" name="Call function" sid="8840000000000240" type="Function">
+                        <action id="0" name="Call function" sid="8900000000000114" type="Function">
                             <param id="0" name="Name">"CreateMenuItem"</param>
-                            <param id="1" name="Parameter {n}">0{###}192{###}320{###}7{###}"Custom SFX: " &amp; Browser.QueryParam("ChangeSFX"){###}"MenuSettingsSFX"</param>
+                            <param id="1" name="Parameter {n}">0{###}192{###}320{###}7{###}"Custom music: " &amp; Browser.QueryParam("ChangeMusic"){###}"MenuSettingsMusic"</param>
                         </action>
-                        <action id="0" name="Call function" sid="8840000000000242" type="Function">
+                        <action id="0" name="Call function" sid="8900000000000116" type="Function">
                             <param id="0" name="Name">"CreateMenuItem"</param>
-                            <param id="1" name="Parameter {n}">0{###}192{###}352{###}8{###}"SaBiMode: " &amp; Browser.QueryParam("SaBiMode"){###}"MenuSettingsSabi"</param>
+                            <param id="1" name="Parameter {n}">0{###}192{###}352{###}8{###}"Custom SFX: " &amp; Browser.QueryParam("ChangeSFX"){###}"MenuSettingsSFX"</param>
+                        </action>
+                        <action id="0" name="Call function" sid="8900000000000118" type="Function">
+                            <param id="0" name="Name">"CreateMenuItem"</param>
+                            <param id="1" name="Parameter {n}">0{###}192{###}384{###}9{###}"SaBiMode: " &amp; Browser.QueryParam("SaBiMode"){###}"MenuSettingsSabi"</param>
                         </action>
                     </actions>
                 </event-block>
@@ -1043,6 +1047,26 @@
                             <param id="0" name="Javascript">"window.BadTimeSettingsUI.toggleSabi();"</param>
                         </action>
                         <action id="0" name="Call function" sid="8840000000000332" type="Function">
+                            <param id="0" name="Name">"MenuSettings"</param>
+                            <param id="1" name="Parameter {n}" />
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="8900000000000120">
+                    <conditions>
+                        <condition id="0" name="On function" sid="8900000000000122" type="Function">
+                            <param id="0" name="Name">"MenuSettingsInfHP"</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="6" name="Pop" sid="8900000000000124" type="MenuStack">
+                            <param id="0" name="Where">0</param>
+                            <param id="1" name="Axis">0</param>
+                        </action>
+                        <action id="17" name="Execute Javascript" sid="8900000000000126" type="Browser">
+                            <param id="0" name="Javascript">"window.BadTimeSettingsUI.toggleInfHp();"</param>
+                        </action>
+                        <action id="0" name="Call function" sid="8900000000000128" type="Function">
                             <param id="0" name="Name">"MenuSettings"</param>
                             <param id="1" name="Parameter {n}" />
                         </action>

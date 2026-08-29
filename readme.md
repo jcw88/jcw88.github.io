@@ -15,6 +15,7 @@
 
 #### Settings
 - NoHit: 1HP
+- InfHP: Infinite HP, with a colored InfHP mark at the bottom right
 - NoHeal: You have no food to eat
 - SaBiMode: Replace all SFX with "mew mew mew", background music switches to Underpants BadTom
 - Custom music
@@ -47,6 +48,7 @@
 
 #### 设置选项
 - NoHit :一碰就死
+- InfHP : 无限血量，右下角有个彩色的InfHP标志
 - NoHeal：关闭玩家回血功能
 - SaBi Mode(傻逼模式)：全部音效替换为喵喵喵，背景音乐切换为 Underpants BadTom
 - 自定义背景音乐

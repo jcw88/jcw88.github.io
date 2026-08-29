@@ -94,6 +94,7 @@
 
 		var settings = {
 			noHit: false,
+			infHp: false,
 			noHeal: false,
 			noKr: false,
 			love: 19,
@@ -130,6 +131,8 @@
 
 		if (params.has("NoHit"))
 			settings.noHit = readFlag("NoHit");
+		if (params.has("InfHP"))
+			settings.infHp = readFlag("InfHP");
 		if (params.has("NoHeal"))
 			settings.noHeal = readFlag("NoHeal");
 		if (params.has("NoKR"))
@@ -165,6 +168,7 @@
 		function settingsUrl(extra) {
 			var url = new URL(window.location.href);
 			url.searchParams.set("NoHit", settings.noHit ? "ON" : "OFF");
+			url.searchParams.set("InfHP", settings.infHp ? "ON" : "OFF");
 			url.searchParams.set("NoHeal", settings.noHeal ? "ON" : "OFF");
 			url.searchParams.set("NoKR", settings.noKr ? "ON" : "OFF");
 			url.searchParams.set("LOVE", String(settings.love));
@@ -461,6 +465,9 @@
 			},
 			toggleNoHit: function () {
 				toggle("noHit");
+			},
+			toggleInfHp: function () {
+				toggle("infHp");
 			},
 			toggleNoHeal: function () {
 				toggle("noHeal");

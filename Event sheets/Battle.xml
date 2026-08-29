@@ -278,6 +278,202 @@
                         </action>
                     </actions>
                 </event-block>
+                <event-block sid="8900000000000000">
+                    <conditions>
+                        <condition id="-8" name="Compare two values" sid="8900000000000002" type="System">
+                            <param id="0" name="First value">Browser.QueryParam("InfHP")</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Second value">"ON"</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-3" name="Create object" sid="8900000000000004" type="System">
+                            <param id="0" name="Object to create">SansFont</param>
+                            <param id="1" name="Layer">"Background"</param>
+                            <param id="2" name="X">548</param>
+                            <param id="3" name="Y">398</param>
+                        </action>
+                        <action id="2" name="Set scale" sid="8900000000000006" type="SansFont">
+                            <param id="0" name="Scale">1.5</param>
+                        </action>
+                        <action id="-5" name="Set width" sid="8900000000000008" type="SansFont">
+                            <param id="0" name="Width">92</param>
+                        </action>
+                        <action id="-6" name="Set height" sid="8900000000000010" type="SansFont">
+                            <param id="0" name="Height">24</param>
+                        </action>
+                        <action id="-10" name="Set value" sid="8900000000000012" type="SansFont">
+                            <param id="0" name="Instance variable">Name</param>
+                            <param id="1" name="Value">"InfHP"</param>
+                        </action>
+                        <action id="0" name="Set text" sid="8900000000000014" type="SansFont">
+                            <param id="0" name="Text">"I"</param>
+                        </action>
+                        <action id="-28" name="Set effect parameter" sid="8900000000000016" type="SansFont">
+                            <param id="0" name="Effect">"Tint"</param>
+                            <param id="1" name="Parameter index">0</param>
+                            <param id="2" name="Value">100</param>
+                        </action>
+                        <action id="-28" name="Set effect parameter" sid="8900000000000018" type="SansFont">
+                            <param id="0" name="Effect">"Tint"</param>
+                            <param id="1" name="Parameter index">1</param>
+                            <param id="2" name="Value">20</param>
+                        </action>
+                        <action id="-28" name="Set effect parameter" sid="8900000000000020" type="SansFont">
+                            <param id="0" name="Effect">"Tint"</param>
+                            <param id="1" name="Parameter index">2</param>
+                            <param id="2" name="Value">20</param>
+                        </action>
+                        <action id="-3" name="Create object" sid="8900000000000022" type="System">
+                            <param id="0" name="Object to create">SansFont</param>
+                            <param id="1" name="Layer">"Background"</param>
+                            <param id="2" name="X">548</param>
+                            <param id="3" name="Y">398</param>
+                        </action>
+                        <action id="2" name="Set scale" sid="8900000000000024" type="SansFont">
+                            <param id="0" name="Scale">1.5</param>
+                        </action>
+                        <action id="-5" name="Set width" sid="8900000000000026" type="SansFont">
+                            <param id="0" name="Width">92</param>
+                        </action>
+                        <action id="-6" name="Set height" sid="8900000000000028" type="SansFont">
+                            <param id="0" name="Height">24</param>
+                        </action>
+                        <action id="-10" name="Set value" sid="8900000000000030" type="SansFont">
+                            <param id="0" name="Instance variable">Name</param>
+                            <param id="1" name="Value">"InfHP"</param>
+                        </action>
+                        <action id="0" name="Set text" sid="8900000000000032" type="SansFont">
+                            <param id="0" name="Text">" n"</param>
+                        </action>
+                        <action id="-28" name="Set effect parameter" sid="8900000000000034" type="SansFont">
+                            <param id="0" name="Effect">"Tint"</param>
+                            <param id="1" name="Parameter index">0</param>
+                            <param id="2" name="Value">100</param>
+                        </action>
+                        <action id="-28" name="Set effect parameter" sid="8900000000000036" type="SansFont">
+                            <param id="0" name="Effect">"Tint"</param>
+                            <param id="1" name="Parameter index">1</param>
+                            <param id="2" name="Value">25</param>
+                        </action>
+                        <action id="-28" name="Set effect parameter" sid="8900000000000038" type="SansFont">
+                            <param id="0" name="Effect">"Tint"</param>
+                            <param id="1" name="Parameter index">2</param>
+                            <param id="2" name="Value">85</param>
+                        </action>
+                        <action id="-3" name="Create object" sid="8900000000000040" type="System">
+                            <param id="0" name="Object to create">SansFont</param>
+                            <param id="1" name="Layer">"Background"</param>
+                            <param id="2" name="X">548</param>
+                            <param id="3" name="Y">398</param>
+                        </action>
+                        <action id="2" name="Set scale" sid="8900000000000042" type="SansFont">
+                            <param id="0" name="Scale">1.5</param>
+                        </action>
+                        <action id="-5" name="Set width" sid="8900000000000044" type="SansFont">
+                            <param id="0" name="Width">92</param>
+                        </action>
+                        <action id="-6" name="Set height" sid="8900000000000046" type="SansFont">
+                            <param id="0" name="Height">24</param>
+                        </action>
+                        <action id="-10" name="Set value" sid="8900000000000048" type="SansFont">
+                            <param id="0" name="Instance variable">Name</param>
+                            <param id="1" name="Value">"InfHP"</param>
+                        </action>
+                        <action id="0" name="Set text" sid="8900000000000050" type="SansFont">
+                            <param id="0" name="Text">"  f"</param>
+                        </action>
+                        <action id="-28" name="Set effect parameter" sid="8900000000000052" type="SansFont">
+                            <param id="0" name="Effect">"Tint"</param>
+                            <param id="1" name="Parameter index">0</param>
+                            <param id="2" name="Value">70</param>
+                        </action>
+                        <action id="-28" name="Set effect parameter" sid="8900000000000054" type="SansFont">
+                            <param id="0" name="Effect">"Tint"</param>
+                            <param id="1" name="Parameter index">1</param>
+                            <param id="2" name="Value">25</param>
+                        </action>
+                        <action id="-28" name="Set effect parameter" sid="8900000000000056" type="SansFont">
+                            <param id="0" name="Effect">"Tint"</param>
+                            <param id="1" name="Parameter index">2</param>
+                            <param id="2" name="Value">100</param>
+                        </action>
+                        <action id="-3" name="Create object" sid="8900000000000058" type="System">
+                            <param id="0" name="Object to create">SansFont</param>
+                            <param id="1" name="Layer">"Background"</param>
+                            <param id="2" name="X">548</param>
+                            <param id="3" name="Y">398</param>
+                        </action>
+                        <action id="2" name="Set scale" sid="8900000000000060" type="SansFont">
+                            <param id="0" name="Scale">1.5</param>
+                        </action>
+                        <action id="-5" name="Set width" sid="8900000000000062" type="SansFont">
+                            <param id="0" name="Width">92</param>
+                        </action>
+                        <action id="-6" name="Set height" sid="8900000000000064" type="SansFont">
+                            <param id="0" name="Height">24</param>
+                        </action>
+                        <action id="-10" name="Set value" sid="8900000000000066" type="SansFont">
+                            <param id="0" name="Instance variable">Name</param>
+                            <param id="1" name="Value">"InfHP"</param>
+                        </action>
+                        <action id="0" name="Set text" sid="8900000000000068" type="SansFont">
+                            <param id="0" name="Text">"   H"</param>
+                        </action>
+                        <action id="-28" name="Set effect parameter" sid="8900000000000070" type="SansFont">
+                            <param id="0" name="Effect">"Tint"</param>
+                            <param id="1" name="Parameter index">0</param>
+                            <param id="2" name="Value">25</param>
+                        </action>
+                        <action id="-28" name="Set effect parameter" sid="8900000000000072" type="SansFont">
+                            <param id="0" name="Effect">"Tint"</param>
+                            <param id="1" name="Parameter index">1</param>
+                            <param id="2" name="Value">65</param>
+                        </action>
+                        <action id="-28" name="Set effect parameter" sid="8900000000000074" type="SansFont">
+                            <param id="0" name="Effect">"Tint"</param>
+                            <param id="1" name="Parameter index">2</param>
+                            <param id="2" name="Value">100</param>
+                        </action>
+                        <action id="-3" name="Create object" sid="8900000000000076" type="System">
+                            <param id="0" name="Object to create">SansFont</param>
+                            <param id="1" name="Layer">"Background"</param>
+                            <param id="2" name="X">548</param>
+                            <param id="3" name="Y">398</param>
+                        </action>
+                        <action id="2" name="Set scale" sid="8900000000000078" type="SansFont">
+                            <param id="0" name="Scale">1.5</param>
+                        </action>
+                        <action id="-5" name="Set width" sid="8900000000000080" type="SansFont">
+                            <param id="0" name="Width">92</param>
+                        </action>
+                        <action id="-6" name="Set height" sid="8900000000000082" type="SansFont">
+                            <param id="0" name="Height">24</param>
+                        </action>
+                        <action id="-10" name="Set value" sid="8900000000000084" type="SansFont">
+                            <param id="0" name="Instance variable">Name</param>
+                            <param id="1" name="Value">"InfHP"</param>
+                        </action>
+                        <action id="0" name="Set text" sid="8900000000000086" type="SansFont">
+                            <param id="0" name="Text">"    P"</param>
+                        </action>
+                        <action id="-28" name="Set effect parameter" sid="8900000000000088" type="SansFont">
+                            <param id="0" name="Effect">"Tint"</param>
+                            <param id="1" name="Parameter index">0</param>
+                            <param id="2" name="Value">35</param>
+                        </action>
+                        <action id="-28" name="Set effect parameter" sid="8900000000000090" type="SansFont">
+                            <param id="0" name="Effect">"Tint"</param>
+                            <param id="1" name="Parameter index">1</param>
+                            <param id="2" name="Value">100</param>
+                        </action>
+                        <action id="-28" name="Set effect parameter" sid="8900000000000092" type="SansFont">
+                            <param id="0" name="Effect">"Tint"</param>
+                            <param id="1" name="Parameter index">2</param>
+                            <param id="2" name="Value">50</param>
+                        </action>
+                    </actions>
+                </event-block>
             </sub-events>
         </event-block>
         <event-block sid="8304459325253301">
@@ -9076,6 +9272,21 @@
                     </conditions>
                     <actions>
                         <action id="-9" name="Set value" sid="4482893522173698" type="System">
+                            <param id="0" name="Variable">HP</param>
+                            <param id="1" name="Value">MaxHP</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="8900000000000094">
+                    <conditions>
+                        <condition id="-8" name="Compare two values" sid="8900000000000096" type="System">
+                            <param id="0" name="First value">Browser.QueryParam("InfHP")</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Second value">"ON"</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Set value" sid="8900000000000098" type="System">
                             <param id="0" name="Variable">HP</param>
                             <param id="1" name="Value">MaxHP</param>
                         </action>
