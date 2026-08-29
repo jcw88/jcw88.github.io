@@ -94,6 +94,11 @@
 
 		var settings = {
 			noHit: false,
+			noHeal: false,
+			noKr: false,
+			love: 19,
+			randomAttack: false,
+			fps: 60,
 			changeMusic: false,
 			changeSfx: false,
 			sabiMode: false
@@ -116,14 +121,34 @@
 			return /^(1|true|on|yes)$/i.test(params.get(name) || "");
 		}
 
+		function clamp(value, low, high, fallback) {
+			value = parseInt(value, 10);
+			if (!isFinite(value))
+				return fallback;
+			return Math.min(high, Math.max(low, value));
+		}
+
 		if (params.has("NoHit"))
 			settings.noHit = readFlag("NoHit");
+		if (params.has("NoHeal"))
+			settings.noHeal = readFlag("NoHeal");
+		if (params.has("NoKR"))
+			settings.noKr = readFlag("NoKR");
+		if (params.has("RandomAttack"))
+			settings.randomAttack = readFlag("RandomAttack");
 		if (params.has("SaBiMode") || params.has("sabimode") || params.has("sabi"))
 			settings.sabiMode = readFlag("SaBiMode") || readFlag("sabimode") || readFlag("sabi");
 		if (params.has("ChangeMusic"))
 			settings.changeMusic = readFlag("ChangeMusic");
 		if (params.has("ChangeSFX"))
 			settings.changeSfx = readFlag("ChangeSFX");
+		if (params.has("LOVE"))
+			settings.love = clamp(params.get("LOVE"), 1, 99, settings.love);
+		if (params.has("FPS"))
+			settings.fps = clamp(params.get("FPS"), 10, 240, settings.fps);
+
+		settings.love = clamp(settings.love, 1, 99, 19);
+		settings.fps = clamp(settings.fps, 10, 240, 60);
 
 		window.BadTimeSettings = settings;
 		window.SaBiMode = settings.sabiMode;
@@ -135,41 +160,99 @@
 		}
 
 		// The in-game settings menu builds its labels out of Browser.QueryParam(),
-		// so the query string is what it reads back. Keep it in sync, and spell the
-		// values ON/OFF so the menu can show them as they are.
-		function settingsUrl(menu) {
+		// and the battle reads the flags the same way, so the query string is the
+		// channel into the game. ON/OFF so the menu can show values as they are.
+		function settingsUrl(extra) {
 			var url = new URL(window.location.href);
 			url.searchParams.set("NoHit", settings.noHit ? "ON" : "OFF");
+			url.searchParams.set("NoHeal", settings.noHeal ? "ON" : "OFF");
+			url.searchParams.set("NoKR", settings.noKr ? "ON" : "OFF");
+			url.searchParams.set("LOVE", String(settings.love));
+			url.searchParams.set("RandomAttack", settings.randomAttack ? "ON" : "OFF");
+			url.searchParams.set("FPS", String(settings.fps));
 			url.searchParams.set("SaBiMode", settings.sabiMode ? "ON" : "OFF");
 			url.searchParams.set("ChangeMusic", settings.changeMusic ? "ON" : "OFF");
 			url.searchParams.set("ChangeSFX", settings.changeSfx ? "ON" : "OFF");
 			url.searchParams.delete("sabimode");
 			url.searchParams.delete("sabi");
 
-			if (menu)
-				url.searchParams.set("menu", menu);
-			else
-				url.searchParams.delete("menu");
+			["menu", "cmd"].forEach(function (key) {
+				if (extra && extra[key])
+					url.searchParams.set(key, extra[key]);
+				else
+					url.searchParams.delete(key);
+			});
 
 			return url.toString();
 		}
 
-		function applyUrl(menu) {
+		function applyUrl(extra) {
 			try {
-				window.history.replaceState(null, "", settingsUrl(menu));
+				window.history.replaceState(null, "", settingsUrl(extra));
 			} catch (e) {}
 		}
 
 		// The runtime caches audio buffers under the URL it first asked for, so an
 		// audio swap only takes effect on a fresh load. Come back to the settings
 		// menu afterwards.
-		function reloadInto(menu) {
+		function reloadIntoSettings() {
 			save();
-			window.location.replace(settingsUrl(menu));
+			window.location.replace(settingsUrl({ menu: "settings" }));
 		}
 
-		applyUrl(params.get("menu"));
+		applyUrl({ menu: params.get("menu") });
 
+		// ---- frame pacing ---------------------------------------------------
+		// The fight is dt driven, so handing the runtime a fixed 1/60s step and
+		// pacing the ticks ourselves is what makes the frame rate decide how fast
+		// everything actually runs - the player, sans' attacks and frame damage.
+		var hardMode = false;
+		var nativeRaf = window.requestAnimationFrame && window.requestAnimationFrame.bind(window);
+		var nativeCancel = window.cancelAnimationFrame && window.cancelAnimationFrame.bind(window);
+		var pacedFrame = false;
+		var frameClock = 0;
+		var frameDue = 0;
+		var frameStep = 1000 / 60;
+
+		function nowMs() {
+			return (window.performance && performance.now) ? performance.now() : Date.now();
+		}
+
+		// Hard mode never drops below 90 FPS, but a higher setting still wins.
+		function effectiveFps() {
+			var fps = settings.fps || 60;
+			if (hardMode && fps < 90)
+				fps = 90;
+			return fps;
+		}
+
+		window.requestAnimationFrame = function (callback) {
+			if (effectiveFps() === 60 && nativeRaf) {
+				pacedFrame = false;
+				return nativeRaf(callback);
+			}
+
+			pacedFrame = true;
+			var real = nowMs();
+			if (!frameDue || Math.abs(real - frameDue) > 250)
+				frameDue = real;
+			frameDue += 1000 / effectiveFps();
+			frameClock = (frameClock || real) + frameStep;
+
+			var stamp = frameClock;
+			return setTimeout(function () {
+				callback(stamp);
+			}, Math.max(0, frameDue - real));
+		};
+
+		window.cancelAnimationFrame = function (id) {
+			if (pacedFrame)
+				clearTimeout(id);
+			else if (nativeCancel)
+				nativeCancel(id);
+		};
+
+		// ---- audio ----------------------------------------------------------
 		function rewriteAudioUrl(url) {
 			if (typeof url !== "string")
 				return url;
@@ -287,7 +370,7 @@
 
 		function clearCustom(key, flag) {
 			function done() {
-				reloadInto("settings");
+				reloadIntoSettings();
 			}
 
 			settings[flag] = false;
@@ -308,32 +391,100 @@
 
 				settings[flag] = true;
 				writeCustomAudio(key, file).then(function () {
-					reloadInto("settings");
+					reloadIntoSettings();
 				}, function () {
 					// Nowhere to persist it - keep the pick for this session only.
 					if (customUrl[key])
 						URL.revokeObjectURL(customUrl[key]);
 					customUrl[key] = URL.createObjectURL(file);
 					save();
-					applyUrl(null);
+					applyUrl();
 				});
 			};
 		}
 
-		// Called from the in-game settings menu (Browser: Execute Javascript).
+		function toggle(name) {
+			settings[name] = !settings[name];
+			save();
+			applyUrl();
+		}
+
+		function ask(message, current, low, high) {
+			var answer = window.prompt(message, String(current));
+			if (answer === null)
+				return current;
+			return clamp(answer, low, high, current);
+		}
+
+		// ---- hotkeys --------------------------------------------------------
+		// The battle polls "cmd" out of the query string every tick; drop it again
+		// shortly afterwards so a keypress outside a fight cannot linger.
+		var cmdTimer = 0;
+
+		function sendCommand(name) {
+			applyUrl({ cmd: name });
+			clearTimeout(cmdTimer);
+			cmdTimer = setTimeout(function () {
+				applyUrl();
+			}, 400);
+		}
+
+		var hotkeys = {
+			82: "retry",     // R
+			27: "menu",      // escape
+			221: "skip"      // ]
+		};
+
+		document.addEventListener("keydown", function (event) {
+			if (event.repeat || event.ctrlKey || event.altKey || event.metaKey)
+				return;
+
+			var command = hotkeys[event.keyCode];
+			if (!command)
+				return;
+
+			event.preventDefault();
+			sendCommand(command);
+		});
+
+		// Called from the game (Browser: Execute Javascript).
 		window.BadTimeSettingsUI = {
 			enter: function () {
-				applyUrl(null);
+				applyUrl();
+			},
+			clearCmd: function () {
+				clearTimeout(cmdTimer);
+				applyUrl();
+			},
+			setHardMode: function (on) {
+				hardMode = !!on;
 			},
 			toggleNoHit: function () {
-				settings.noHit = !settings.noHit;
+				toggle("noHit");
+			},
+			toggleNoHeal: function () {
+				toggle("noHeal");
+			},
+			toggleNoKr: function () {
+				toggle("noKr");
+			},
+			toggleRandomAttack: function () {
+				toggle("randomAttack");
+			},
+			setLove: function () {
+				settings.love = ask("LOVE (1-99)", settings.love, 1, 99);
 				save();
-				applyUrl(null);
+				applyUrl();
+			},
+			setFps: function () {
+				settings.fps = ask("FPS (10-240)", settings.fps, 10, 240);
+				save();
+				applyUrl();
 			},
 			toggleSabi: function () {
 				settings.sabiMode = !settings.sabiMode;
 				window.SaBiMode = settings.sabiMode;
-				reloadInto("settings");
+				reloadIntoSettings();
 			},
 			toggleMusic: function () {
 				if (settings.changeMusic)
