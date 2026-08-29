@@ -25,6 +25,9 @@
 - Random Attack mode : Intro and Final won't
 - FPS : Set FPS(Affects Damage and Player Speed)
 
+#### Custom attacks
+- Custom attack > Make attack: write an attack in the browser, with the command list, a checker and one click to load it into the game
+
 #### Hotkeys
 - `R` — Retry battle
 - `ESC` — Return to main menu
@@ -57,6 +60,9 @@
 - LOVE : 设置LOVE 
 - Random Attack : 每次攻击随机，开头和结尾不变
 - FPS : 改FPS,这会影响Boss伤害，玩家移速等
+
+#### 自定义攻击
+- Custom attack > Make attack：直接在网页里写攻击，带指令列表、语法检查，一键加载进游戏
 
 #### 快捷键
 - `R` — 重新开始战斗

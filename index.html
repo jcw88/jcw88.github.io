@@ -38,8 +38,168 @@
 			touch-action: none;
 			-ms-touch-action: none;
 		}
-		.audioPicker {
+		.filePicker {
 			display: none;
+		}
+		#attackMaker {
+			position: fixed;
+			inset: 0;
+			z-index: 30;
+			display: none;
+			background: rgba(0, 0, 0, 0.85);
+			color: #fff;
+			font: 13px/1.5 "Courier New", monospace;
+		}
+		#attackMaker.open {
+			display: flex;
+		}
+		.amPanel {
+			display: flex;
+			flex-direction: column;
+			margin: auto;
+			width: min(1000px, 96vw);
+			height: min(700px, 94vh);
+			border: 2px solid #fff;
+			background: #000;
+		}
+		.amHead {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			padding: 8px 12px;
+			border-bottom: 2px solid #fff;
+		}
+		.amHead h2 {
+			font-size: 18px;
+			font-weight: 700;
+			letter-spacing: 1px;
+		}
+		.amHead a {
+			color: #ffb03b;
+		}
+		.amBody {
+			display: flex;
+			flex: 1;
+			min-height: 0;
+		}
+		.amMain {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			min-width: 0;
+		}
+		#amText {
+			flex: 1;
+			resize: none;
+			border: 0;
+			border-right: 2px solid #fff;
+			padding: 8px;
+			background: #000;
+			color: #fff;
+			font: 13px/1.5 "Courier New", monospace;
+			tab-size: 4;
+			white-space: pre;
+			overflow: auto;
+		}
+		#amText:focus {
+			outline: none;
+		}
+		#amStatus {
+			border-top: 2px solid #fff;
+			border-right: 2px solid #fff;
+			padding: 6px 8px;
+			min-height: 60px;
+			max-height: 110px;
+			overflow: auto;
+			color: #9adb6a;
+			white-space: pre-wrap;
+		}
+		#amStatus.bad {
+			color: #ff7676;
+		}
+		.amSide {
+			display: flex;
+			flex-direction: column;
+			width: 290px;
+			min-width: 290px;
+		}
+		#amSearch {
+			border: 0;
+			border-bottom: 2px solid #fff;
+			padding: 7px 8px;
+			background: #000;
+			color: #fff;
+			font: 13px "Courier New", monospace;
+		}
+		#amSearch:focus {
+			outline: none;
+		}
+		#amList {
+			flex: 1;
+			overflow: auto;
+			padding: 4px 0;
+		}
+		#amList .amGroup {
+			padding: 6px 8px 2px;
+			color: #ffb03b;
+			font-weight: 700;
+		}
+		#amList button {
+			display: block;
+			width: 100%;
+			border: 0;
+			padding: 3px 8px;
+			background: none;
+			color: #fff;
+			font: 13px "Courier New", monospace;
+			text-align: left;
+			cursor: pointer;
+		}
+		#amList button:hover,
+		#amList button:focus {
+			background: #fff;
+			color: #000;
+			outline: none;
+		}
+		#amHelp {
+			border-top: 2px solid #fff;
+			padding: 8px;
+			height: 150px;
+			overflow: auto;
+			color: #c8c8c8;
+		}
+		#amHelp b {
+			color: #fff;
+		}
+		.amFoot {
+			display: flex;
+			gap: 8px;
+			padding: 8px 12px;
+			border-top: 2px solid #fff;
+		}
+		.amFoot .amSpacer {
+			flex: 1;
+		}
+		#attackMaker button.amBtn {
+			border: 2px solid #fff;
+			padding: 5px 12px;
+			background: #000;
+			color: #fff;
+			font: 13px "Courier New", monospace;
+			cursor: pointer;
+		}
+		#attackMaker button.amBtn:hover {
+			background: #fff;
+			color: #000;
+		}
+		#attackMaker button.amGo {
+			border-color: #ffb03b;
+			color: #ffb03b;
+		}
+		#attackMaker button.amGo:hover {
+			background: #ffb03b;
+			color: #000;
 		}
     </style>
 	
@@ -48,8 +208,36 @@
  
 <body> 
 	<div id="fb-root"></div>
-	<input id="musicPicker" class="audioPicker" type="file" accept="audio/*,.mp3,.ogg,.wav,.m4a,.flac" />
-	<input id="sfxPicker" class="audioPicker" type="file" accept="audio/*,.mp3,.ogg,.wav,.m4a,.flac" />
+	<input id="musicPicker" class="filePicker" type="file" accept="audio/*,.mp3,.ogg,.wav,.m4a,.flac" />
+	<input id="sfxPicker" class="filePicker" type="file" accept="audio/*,.mp3,.ogg,.wav,.m4a,.flac" />
+	<div id="attackMaker">
+		<div class="amPanel">
+			<div class="amHead">
+				<h2>Make Custom Attack</h2>
+				<span><a href="https://github.com/jcw88/jcw88.github.io/blob/main/Documentation/README.MD" target="_blank" rel="noopener">documentation</a> &nbsp; one row per step: delay,command,arguments</span>
+			</div>
+			<div class="amBody">
+				<div class="amMain">
+					<textarea id="amText" spellcheck="false" autocomplete="off"></textarea>
+					<div id="amStatus"></div>
+				</div>
+				<div class="amSide">
+					<input id="amSearch" type="text" placeholder="search commands" autocomplete="off" />
+					<div id="amList"></div>
+					<div id="amHelp"></div>
+				</div>
+			</div>
+			<div class="amFoot">
+				<button type="button" class="amBtn" id="amOpen">Open .csv</button>
+				<button type="button" class="amBtn" id="amDownload">Save .csv</button>
+				<button type="button" class="amBtn" id="amTemplate">Template</button>
+				<span class="amSpacer"></span>
+				<button type="button" class="amBtn" id="amClose">Close</button>
+				<button type="button" class="amBtn amGo" id="amPlay">Load into game</button>
+			</div>
+		</div>
+	</div>
+	<input id="amFile" class="filePicker" type="file" accept=".csv,text/csv" />
 	
 	<script>
 	// Issue a warning if trying to preview an exported project on disk.
@@ -180,7 +368,7 @@
 			url.searchParams.delete("sabimode");
 			url.searchParams.delete("sabi");
 
-			["menu", "cmd"].forEach(function (key) {
+			["menu", "cmd", "attackurl"].forEach(function (key) {
 				if (extra && extra[key])
 					url.searchParams.set(key, extra[key]);
 				else
@@ -425,8 +613,10 @@
 		// shortly afterwards so a keypress outside a fight cannot linger.
 		var cmdTimer = 0;
 
-		function sendCommand(name) {
-			applyUrl({ cmd: name });
+		function sendCommand(name, extra) {
+			var params = { cmd: name };
+			Object.assign(params, extra);
+			applyUrl(params);
 			clearTimeout(cmdTimer);
 			cmdTimer = setTimeout(function () {
 				applyUrl();
@@ -442,6 +632,10 @@
 		document.addEventListener("keydown", function (event) {
 			if (event.repeat || event.ctrlKey || event.altKey || event.metaKey)
 				return;
+			if (window.BadTimeAttackMaker && window.BadTimeAttackMaker.isOpen())
+				return;
+			if (/^(input|textarea|select)$/i.test((event.target && event.target.tagName) || ""))
+				return;
 
 			var command = hotkeys[event.keyCode];
 			if (!command)
@@ -456,6 +650,7 @@
 			enter: function () {
 				applyUrl();
 			},
+			sendCommand: sendCommand,
 			clearCmd: function () {
 				clearTimeout(cmdTimer);
 				applyUrl();
@@ -512,6 +707,363 @@
 
 		// The runtime must not start loading audio before the custom files are back.
 		window.BadTimeAudioReady = readCustomAudio().catch(function () {});
+	})();
+	</script>
+
+	<script>
+	// The custom attack editor behind "Custom attack > Make attack".
+	(function () {
+		var draftKey = "badTimeAttackDraft";
+
+		// Signatures come from Documentation/, corrected against the event sheets
+		// where the two disagree (ANGLE takes the variable name first, and the
+		// instant resize is called CombatZoneResizeInstant).
+		var COMMANDS = [
+			["General", [
+				["EndAttack", [], "Ends the attack. Without this the attack never finishes."],
+				["TLPause", [], "Pause the timeline."],
+				["TLResume", [], "Resume the timeline, usually scheduled by CombatZoneResize."],
+				["BlackScreen", ["BooleanEnabled"], "Show or hide the black screen, and clear projectiles."],
+				["Sound", ["SoundName", "PlaybackRate"], "Play a sound, e.g. Flash. Playback rate is optional."],
+				["Music", ["MusicName"], "Play music. Only mus_zz_megalovania works."],
+				["Debug", [], "Freeze the game by setting the time scale to zero."]
+			]],
+			["Sans", [
+				["SansAnimation", ["AnimationName"], "Idle, HeadBob or Tired."],
+				["SansBody", ["AnimationName"], "HandUp, HandDown, HandLeft or HandRight."],
+				["SansTorso", ["AnimationName"], "Default or Shrug."],
+				["SansHead", ["AnimationName"], "Default, LookLeft, Wink, ClosedEyes, NoEyes, BlueEye, Tired1 or Tired2."],
+				["SansSweat", ["SweatLevel"], "How much sweat to show, 0 to 3."],
+				["SansX", ["XPosition"], "Move sans to a horizontal position."],
+				["SansRepeat", [], "Make sans scroll across the screen."],
+				["SansEndRepeat", [], "Stop sans scrolling."],
+				["SansText", ["Text", "EndFunction"], "Speech bubble. Keep it short, and no commas."],
+				["SansSlam", ["Direction"], "Slam the heart against the combat zone."],
+				["SansSlamDamage", ["BooleanEnabled"], "Turn slam damage on or off."]
+			]],
+			["Attacks", [
+				["BoneH", ["XPosition", "YPosition", "Width", "Direction", "Speed", "Color"], "One horizontal bone."],
+				["BoneV", ["XPosition", "YPosition", "Height", "Direction", "Speed", "Color"], "One vertical bone."],
+				["BoneHRepeat", ["StartX", "StartY", "Width", "Direction", "Speed", "Count", "Spacing"], "A row of horizontal bones."],
+				["BoneVRepeat", ["StartX", "StartY", "Height", "Direction", "Speed", "Count", "Spacing"], "A row of vertical bones."],
+				["SineBones", ["Count", "Spacing", "Speed", "Height"], "Bones leaving a sine wave gap."],
+				["BoneStab", ["Direction", "Distance", "WarnTime", "StayTime"], "Wall of bones out of the side of the zone."],
+				["GasterBlaster", ["Size", "StartX", "StartY", "EndX", "EndY", "EndAngle", "SpinTime", "BlastTime"], "Move a blaster into place and fire it."],
+				["Platform", ["X", "Y", "Width", "Direction", "Speed", "BooleanReverse"], "One platform."],
+				["PlatformRepeat", ["StartX", "StartY", "Width", "Direction", "Speed", "Count", "Spacing"], "A row of platforms."],
+				["HeartMode", ["Mode"], "0 red, 1 blue."],
+				["HeartTeleport", ["X", "Y"], "Move the heart instantly."],
+				["HeartMaxFallSpeed", ["MaxSpeed"], "Max fall speed in blue mode."]
+			]],
+			["Combat zone", [
+				["CombatZoneSpeed", ["Speed"], "How fast the zone resizes."],
+				["CombatZoneResize", ["Left", "Top", "Right", "Bottom", "FinishAction"], "Resize, then call FinishAction - usually TLResume."],
+				["CombatZoneResizeInstant", ["Left", "Top", "Right", "Bottom"], "Resize with no animation."],
+				["GetHeartPos", ["XVariableName", "YVariableName"], "Store the heart position in two variables."]
+			]],
+			["Maths", [
+				["SET", ["VariableName", "Value"], "Set a variable. Read it back with $Name."],
+				["ADD", ["VariableName", "Value1", "Value2"], "Value1 + Value2."],
+				["SUB", ["VariableName", "Value1", "Value2"], "Value1 - Value2."],
+				["MUL", ["VariableName", "Value1", "Value2"], "Value1 * Value2."],
+				["DIV", ["VariableName", "Value1", "Value2"], "Value1 / Value2."],
+				["MOD", ["VariableName", "Value1", "Value2"], "Value1 modulo Value2."],
+				["FLOOR", ["VariableName", "Value"], "Round down."],
+				["DEG", ["VariableName", "Radians"], "Radians to degrees."],
+				["RAD", ["VariableName", "Degrees"], "Degrees to radians."],
+				["SIN", ["VariableName", "Degrees"], "Sine of an angle in degrees."],
+				["COS", ["VariableName", "Degrees"], "Cosine of an angle in degrees."],
+				["ANGLE", ["VariableName", "Point1X", "Point1Y", "Point2X", "Point2Y"], "Angle from point 1 to point 2."],
+				["RND", ["VariableName", "Number"], "Random whole number from 0 to Number-1."]
+			]],
+			["Jumps", [
+				[":Label", ["LabelName"], "Not a command - a label you can jump to. Type it as :Name in the command column."],
+				["JMPABS", ["LineOrLabel"], "Jump to a line number or label."],
+				["JMPREL", ["RelativeLine"], "Jump forwards or backwards by a number of lines."],
+				["JMPZ", ["LineOrLabel", "TestValue"], "Jump if the value is zero."],
+				["JMPNZ", ["LineOrLabel", "TestValue"], "Jump if the value is not zero."],
+				["JMPE", ["LineOrLabel", "TestValue1", "TestValue2"], "Jump if equal."],
+				["JMPNE", ["LineOrLabel", "TestValue1", "TestValue2"], "Jump if not equal."],
+				["JMPL", ["LineOrLabel", "TestValue1", "TestValue2"], "Jump if less."],
+				["JMPNL", ["LineOrLabel", "TestValue1", "TestValue2"], "Jump if not less."],
+				["JMPG", ["LineOrLabel", "TestValue1", "TestValue2"], "Jump if greater."],
+				["JMPNG", ["LineOrLabel", "TestValue1", "TestValue2"], "Jump if not greater."]
+			]]
+		];
+
+		var BY_NAME = {};
+		COMMANDS.forEach(function (group) {
+			group[1].forEach(function (command) {
+				BY_NAME[command[0].toLowerCase()] = command;
+			});
+		});
+
+		var TEMPLATE = [
+			"0,CombatZoneResize,133,251,508,391,TLResume",
+			"0,HeartTeleport,320,376",
+			"0,HeartMode,0",
+			"0,TLPause",
+			"0.5,BoneVRepeat,128,257,95,0,180,6,120",
+			"3,EndAttack",
+			""
+		].join("\n");
+
+		var root = document.getElementById("attackMaker");
+		var text = document.getElementById("amText");
+		var status = document.getElementById("amStatus");
+		var list = document.getElementById("amList");
+		var help = document.getElementById("amHelp");
+		var search = document.getElementById("amSearch");
+		var filePicker = document.getElementById("amFile");
+		var attackUrl = "";
+
+		function renderList() {
+			var needle = search.value.trim().toLowerCase();
+			list.innerHTML = "";
+
+			COMMANDS.forEach(function (group) {
+				var matches = group[1].filter(function (command) {
+					return !needle || command[0].toLowerCase().indexOf(needle) >= 0;
+				});
+				if (!matches.length)
+					return;
+
+				var heading = document.createElement("div");
+				heading.className = "amGroup";
+				heading.textContent = group[0];
+				list.appendChild(heading);
+
+				matches.forEach(function (command) {
+					var button = document.createElement("button");
+					button.type = "button";
+					button.textContent = command[0];
+					button.title = command[2];
+					button.addEventListener("click", function () {
+						describe(command);
+						insert(command);
+					});
+					button.addEventListener("mouseenter", function () {
+						describe(command);
+					});
+					list.appendChild(button);
+				});
+			});
+		}
+
+		function describe(command) {
+			var signature = command[0] + (command[1].length ? "," + command[1].join(",") : "");
+			help.innerHTML = "";
+			var line = document.createElement("div");
+			var name = document.createElement("b");
+			name.textContent = "delay," + signature;
+			line.appendChild(name);
+			help.appendChild(line);
+			var note = document.createElement("div");
+			note.textContent = command[2];
+			help.appendChild(note);
+		}
+
+		// Drop the row in as delay + placeholders, so it is obvious what is left
+		// to fill in and the checker can point at anything still untouched.
+		function insert(command) {
+			var row = ["0", command[0]].concat(command[1]).join(",");
+			if (command[0] === ":Label")
+				row = "0,:LabelName";
+
+			var start = text.selectionStart;
+			var body = text.value;
+			var lineEnd = body.indexOf("\n", start);
+			if (lineEnd === -1)
+				lineEnd = body.length;
+
+			var head = body.slice(0, lineEnd);
+			if (head && !head.endsWith("\n"))
+				row = "\n" + row;
+
+			text.value = head + row + body.slice(lineEnd);
+			text.focus();
+			text.selectionStart = text.selectionEnd = head.length + row.length;
+			check();
+		}
+
+		function check() {
+			var lines = text.value.split(/\r?\n/);
+			var problems = [];
+			var labels = {};
+			var ends = false;
+
+			lines.forEach(function (line, index) {
+				if (!line.trim())
+					return;
+
+				var cells = line.split(",");
+				var number = index + 1;
+				var delay = cells[0].trim();
+				var name = (cells[1] || "").trim();
+				var args = cells.slice(2).map(function (cell) {
+					return cell.trim();
+				});
+				while (args.length && args[args.length - 1] === "")
+					args.pop();
+
+				if (delay === "" || isNaN(Number(delay)))
+					problems.push("line " + number + ": the first column is the delay in seconds, got \"" + cells[0] + "\"");
+
+				if (name.charAt(0) === ":") {
+					if (name.length < 2)
+						problems.push("line " + number + ": a label needs a name after the colon");
+					else
+						labels[name.slice(1)] = true;
+					return;
+				}
+
+				if (!name) {
+					problems.push("line " + number + ": no command");
+					return;
+				}
+
+				var command = BY_NAME[name.toLowerCase()];
+				if (!command) {
+					problems.push("line " + number + ": unknown command \"" + name + "\"");
+					return;
+				}
+
+				if (name.toLowerCase() === "endattack")
+					ends = true;
+
+				var required = command[1].length;
+				if (name === "Sound" || name === "SansText")
+					required -= 1;   // the last argument is optional on these two
+				if (args.length < required)
+					problems.push("line " + number + ": " + name + " wants " + command[1].join(", "));
+
+				var untouched = args.filter(function (value) {
+					return command[1].indexOf(value) >= 0;
+				});
+				if (untouched.length)
+					problems.push("line " + number + ": " + name + " still has placeholders - " + untouched.join(", "));
+			});
+
+			if (!ends)
+				problems.push("no EndAttack anywhere - the attack would never finish");
+
+			status.classList.toggle("bad", problems.length > 0);
+			if (!problems.length) {
+				var rows = lines.filter(function (line) { return line.trim(); }).length;
+				status.textContent = "looks fine - " + rows + " row" + (rows === 1 ? "" : "s");
+			} else {
+				status.textContent = problems.slice(0, 8).join("\n") +
+					(problems.length > 8 ? "\n... and " + (problems.length - 8) + " more" : "");
+			}
+
+			return problems.length === 0;
+		}
+
+		function saveDraft() {
+			try {
+				localStorage.setItem(draftKey, text.value);
+			} catch (e) {}
+		}
+
+		function open() {
+			var draft = "";
+			try {
+				draft = localStorage.getItem(draftKey) || "";
+			} catch (e) {}
+
+			text.value = draft || TEMPLATE;
+			root.classList.add("open");
+			renderList();
+			check();
+			text.focus();
+		}
+
+		function close() {
+			saveDraft();
+			root.classList.remove("open");
+		}
+
+		// The runtime listens for keys on document, so stop anything typed in here
+		// from also driving the menu behind the overlay.
+		["keydown", "keyup", "keypress"].forEach(function (type) {
+			root.addEventListener(type, function (event) {
+				event.stopPropagation();
+				if (type === "keydown" && event.key === "Escape") {
+					event.preventDefault();
+					close();
+				}
+			});
+		});
+
+		text.addEventListener("input", function () {
+			check();
+			saveDraft();
+		});
+		search.addEventListener("input", renderList);
+
+		document.getElementById("amClose").addEventListener("click", close);
+		document.getElementById("amTemplate").addEventListener("click", function () {
+			text.value = TEMPLATE;
+			check();
+			saveDraft();
+			text.focus();
+		});
+
+		document.getElementById("amOpen").addEventListener("click", function () {
+			filePicker.click();
+		});
+		filePicker.addEventListener("change", function () {
+			var file = this.files && this.files[0];
+			this.value = "";
+			if (!file)
+				return;
+
+			var reader = new FileReader();
+			reader.onload = function () {
+				text.value = String(reader.result).replace(/\r\n/g, "\n");
+				check();
+				saveDraft();
+			};
+			reader.readAsText(file);
+		});
+
+		document.getElementById("amDownload").addEventListener("click", function () {
+			var blob = new Blob([text.value], { type: "text/csv" });
+			var url = URL.createObjectURL(blob);
+			var link = document.createElement("a");
+			link.href = url;
+			link.download = "custom.csv";
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+			setTimeout(function () {
+				URL.revokeObjectURL(url);
+			}, 1000);
+		});
+
+		document.getElementById("amPlay").addEventListener("click", function () {
+			if (!check() && !window.confirm("The attack has problems. Load it anyway?"))
+				return;
+
+			saveDraft();
+
+			if (attackUrl)
+				URL.revokeObjectURL(attackUrl);
+			attackUrl = URL.createObjectURL(new Blob([text.value], { type: "text/csv" }));
+
+			// The menu picks the URL up out of the query string and fetches it with
+			// the same AJAX call the file chooser uses.
+			window.BadTimeSettingsUI.sendCommand("attack", { attackurl: attackUrl });
+			close();
+		});
+
+		window.BadTimeAttackMaker = {
+			open: open,
+			close: close,
+			isOpen: function () {
+				return root.classList.contains("open");
+			}
+		};
 	})();
 	</script>
 

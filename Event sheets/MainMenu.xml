@@ -408,9 +408,13 @@
                             <param id="0" name="Name">"CreateMenuItem"</param>
                             <param id="1" name="Parameter {n}">0{###}192{###}96{###}0{###}"Documentation"{###}""</param>
                         </action>
+                        <action id="0" name="Call function" sid="8920000000000000" type="Function">
+                            <param id="0" name="Name">"CreateMenuItem"</param>
+                            <param id="1" name="Parameter {n}">0{###}192{###}128{###}1{###}"Make attack"{###}"MenuCustomMake"</param>
+                        </action>
                         <action id="0" name="Call function" sid="363254892081796" type="Function">
                             <param id="0" name="Name">"CreateMenuItem"</param>
-                            <param id="1" name="Parameter {n}">0{###}192{###}128{###}1{###}"Load file"{###}"MenuCustomSelect"</param>
+                            <param id="1" name="Parameter {n}">0{###}192{###}160{###}2{###}"Load file"{###}"MenuCustomSelect"</param>
                         </action>
                     </actions>
                     <sub-events>
@@ -435,7 +439,7 @@
                             <actions>
                                 <action id="0" name="Call function" sid="133977934621254" type="Function">
                                     <param id="0" name="Name">"CreateMenuItem"</param>
-                                    <param id="1" name="Parameter {n}">0{###}192{###}160{###}2{###}"Run attack"{###}Action</param>
+                                    <param id="1" name="Parameter {n}">0{###}192{###}192{###}3{###}"Run attack"{###}Action</param>
                                 </action>
                             </actions>
                         </event-block>
@@ -531,6 +535,10 @@
                         <action id="-10" name="Set value" sid="9241165621789806" type="BattleFont">
                             <param id="0" name="Instance variable">Timeout</param>
                             <param id="1" name="Value">1</param>
+                        </action>
+                        <action id="0" name="Call function" sid="8920000000000002" type="Function">
+                            <param id="0" name="Name">"MenuModeCustom"</param>
+                            <param id="1" name="Parameter {n}" />
                         </action>
                     </actions>
                 </event-block>
@@ -1069,6 +1077,37 @@
                         <action id="0" name="Call function" sid="8900000000000128" type="Function">
                             <param id="0" name="Name">"MenuSettings"</param>
                             <param id="1" name="Parameter {n}" />
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="8920000000000004">
+                    <conditions>
+                        <condition id="0" name="On function" sid="8920000000000006" type="Function">
+                            <param id="0" name="Name">"MenuCustomMake"</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="17" name="Execute Javascript" sid="8920000000000008" type="Browser">
+                            <param id="0" name="Javascript">"window.BadTimeAttackMaker.open();"</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="8920000000000010">
+                    <conditions>
+                        <condition id="-1" name="Every tick" sid="8920000000000012" type="System" />
+                        <condition id="-8" name="Compare two values" sid="8920000000000014" type="System">
+                            <param id="0" name="First value">Browser.QueryParam("cmd")</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Second value">"attack"</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Request URL" sid="8920000000000016" type="AJAX">
+                            <param id="0" name="Tag">"custom"</param>
+                            <param id="1" name="URL">Browser.QueryParam("attackurl")</param>
+                        </action>
+                        <action id="17" name="Execute Javascript" sid="8920000000000018" type="Browser">
+                            <param id="0" name="Javascript">"window.BadTimeSettingsUI.clearCmd();"</param>
                         </action>
                     </actions>
                 </event-block>
