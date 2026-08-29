@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bad Time Simulator Local</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="web/app.css">
+</head>
+<body>
+<div id="sans-app">
+  <header class="topbar">
+    <div>
+      <h1>Bad Time Simulator Local</h1>
+      <p>Playable local build using the bundled Sans attacks.</p>
+    </div>
+    <div class="controls">
+      <label>
+        Attack
+        <select id="attackSelect"></select>
+      </label>
+      <button id="restartBtn" type="button">Restart</button>
+      <button id="pauseBtn" type="button">Pause</button>
+      <label class="debug-check">
+        <input id="debugToggle" type="checkbox">
+        Debug
+      </label>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="stage-wrap">
+      <canvas id="stage" width="640" height="480" aria-label="Sans battle simulator"></canvas>
+      <div class="hud-row">
+        <span>HP <strong id="hpText">92 / 92</strong></span>
+        <span>KR <strong id="krText">0</strong></span>
+        <span>Time <strong id="timeText">0.00</strong>s</span>
+        <span id="modeText">RED</span>
+      </div>
+    </section>
+
+    <aside class="side">
+      <div class="panel">
+        <h2>Script</h2>
+        <div id="scriptInfo" class="script-info">Loading...</div>
+      </div>
+      <div class="panel">
+        <h2>Events</h2>
+        <ol id="eventList" class="event-list"></ol>
+      </div>
+    </aside>
+  </main>
+</div>
+
+<script src="web/app.js"></script>
+</body>
+</html>
