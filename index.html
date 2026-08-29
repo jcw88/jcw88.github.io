@@ -38,6 +38,50 @@
 			touch-action: none;
 			-ms-touch-action: none;
 		}
+		#settingsButton {
+			position: fixed;
+			top: 10px;
+			right: 10px;
+			z-index: 20;
+			border: 2px solid #fff;
+			background: #000;
+			color: #fff;
+			font: 16px Arial, sans-serif;
+			padding: 7px 12px;
+			cursor: pointer;
+		}
+		#settingsPanel {
+			position: fixed;
+			top: 50px;
+			right: 10px;
+			z-index: 21;
+			width: 220px;
+			border: 2px solid #fff;
+			background: #050505;
+			color: #fff;
+			font: 16px Arial, sans-serif;
+			padding: 12px;
+			display: none;
+		}
+		#settingsPanel.open {
+			display: block;
+		}
+		#settingsPanel h2 {
+			font-size: 18px;
+			font-weight: 700;
+			margin: 0 0 10px;
+		}
+		.settingRow {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			min-height: 34px;
+		}
+		.settingRow input {
+			width: 20px;
+			height: 20px;
+		}
     </style>
 	
 
@@ -45,6 +89,26 @@
  
 <body> 
 	<div id="fb-root"></div>
+	<button id="settingsButton" type="button">Settings</button>
+	<div id="settingsPanel">
+		<h2>Settings</h2>
+		<label class="settingRow">
+			<span>NoHit</span>
+			<input id="settingNoHit" type="checkbox" />
+		</label>
+		<label class="settingRow">
+			<span>Change Music</span>
+			<input id="settingChangeMusic" type="checkbox" />
+		</label>
+		<label class="settingRow">
+			<span>Change SFX</span>
+			<input id="settingChangeSfx" type="checkbox" />
+		</label>
+		<label class="settingRow">
+			<span>SabiMode</span>
+			<input id="settingSabiMode" type="checkbox" />
+		</label>
+	</div>
 	
 	<script>
 	// Issue a warning if trying to preview an exported project on disk.
@@ -83,19 +147,57 @@
 
 	<script>
 	(function () {
+		var storageKey = "badTimeSettings";
 		var params = new URLSearchParams(window.location.search);
-		var flag = params.get("SaBiMode") || params.get("sabimode") || params.get("sabi");
-		var enabled = /^(1|true|on|yes)$/i.test(flag || "");
-		window.SaBiMode = enabled;
+		var settings = {
+			noHit: false,
+			changeMusic: true,
+			changeSfx: true,
+			sabiMode: false
+		};
 
-		if (!enabled)
+		try {
+			var saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
+			Object.assign(settings, saved);
+		} catch (e) {}
+
+		function readFlag(name) {
+			var value = params.get(name);
+			return /^(1|true|on|yes)$/i.test(value || "");
+		}
+
+		if (params.has("NoHit"))
+			settings.noHit = readFlag("NoHit");
+		if (params.has("SaBiMode") || params.has("sabimode") || params.has("sabi"))
+			settings.sabiMode = readFlag("SaBiMode") || readFlag("sabimode") || readFlag("sabi");
+		if (params.has("ChangeMusic"))
+			settings.changeMusic = readFlag("ChangeMusic");
+		if (params.has("ChangeSFX"))
+			settings.changeSfx = readFlag("ChangeSFX");
+
+		window.BadTimeSettings = settings;
+		window.SaBiMode = settings.sabiMode;
+
+		if (settings.noHit && params.get("NoHit") !== "1") {
+			params.set("NoHit", "1");
+			window.location.replace(window.location.pathname + "?" + params.toString() + window.location.hash);
 			return;
+		}
 
 		function rewriteAudioUrl(url) {
 			if (typeof url !== "string")
 				return url;
 
-			return url.replace(/(^|\/)media\/([^\/?#]+\.ogg)([?#].*)?$/i, "$1sabi_media/$2$3");
+			if (!settings.sabiMode)
+				return url;
+
+			return url.replace(/(^|\/)media\/([^\/?#]+\.ogg)([?#].*)?$/i, function (match, prefix, file, suffix) {
+				var isMusic = file.toLowerCase() === "mus_zz_megalovania.ogg";
+				if ((isMusic && !settings.changeMusic) || (!isMusic && !settings.changeSfx))
+					return match;
+
+				return prefix + "sabi_media/" + file + (suffix || "");
+			});
 		}
 
 		var originalOpen = XMLHttpRequest.prototype.open;
@@ -115,6 +217,52 @@
 				return originalFetch.call(this, input, init);
 			};
 		}
+
+		jQuery(function () {
+			var panel = document.getElementById("settingsPanel");
+			var button = document.getElementById("settingsButton");
+			var controls = {
+				noHit: document.getElementById("settingNoHit"),
+				changeMusic: document.getElementById("settingChangeMusic"),
+				changeSfx: document.getElementById("settingChangeSfx"),
+				sabiMode: document.getElementById("settingSabiMode")
+			};
+
+			Object.keys(controls).forEach(function (key) {
+				controls[key].checked = !!settings[key];
+			});
+
+			button.addEventListener("click", function (event) {
+				event.stopPropagation();
+				panel.classList.toggle("open");
+			});
+
+			panel.addEventListener("click", function (event) {
+				event.stopPropagation();
+			});
+
+			document.addEventListener("click", function () {
+				panel.classList.remove("open");
+			});
+
+			function applySettings() {
+				Object.keys(controls).forEach(function (key) {
+					settings[key] = controls[key].checked;
+				});
+				localStorage.setItem(storageKey, JSON.stringify(settings));
+
+				var next = new URL(window.location.href);
+				next.searchParams.set("NoHit", settings.noHit ? "1" : "0");
+				next.searchParams.set("SaBiMode", settings.sabiMode ? "1" : "0");
+				next.searchParams.set("ChangeMusic", settings.changeMusic ? "1" : "0");
+				next.searchParams.set("ChangeSFX", settings.changeSfx ? "1" : "0");
+				window.location.replace(next.toString());
+			}
+
+			Object.keys(controls).forEach(function (key) {
+				controls[key].addEventListener("change", applySettings);
+			});
+		});
 	})();
 	</script>
 
