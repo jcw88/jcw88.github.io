@@ -301,6 +301,7 @@
 			noKr: false,
 			love: 19,
 			randomAttack: false,
+			adhd: false,
 			fps: 60,
 			changeMusic: false,
 			changeSfx: false,
@@ -341,6 +342,8 @@
 			settings.noKr = readFlag("NoKR");
 		if (params.has("RandomAttack"))
 			settings.randomAttack = readFlag("RandomAttack");
+		if (params.has("ADHD"))
+			settings.adhd = readFlag("ADHD");
 		if (params.has("SaBiMode") || params.has("sabimode") || params.has("sabi"))
 			settings.sabiMode = readFlag("SaBiMode") || readFlag("sabimode") || readFlag("sabi");
 		if (params.has("ChangeMusic"))
@@ -375,6 +378,7 @@
 			url.searchParams.set("NoKR", settings.noKr ? "ON" : "OFF");
 			url.searchParams.set("LOVE", String(settings.love));
 			url.searchParams.set("RandomAttack", settings.randomAttack ? "ON" : "OFF");
+			url.searchParams.set("ADHD", settings.adhd ? "ON" : "OFF");
 			url.searchParams.set("FPS", String(settings.fps));
 			url.searchParams.set("SaBiMode", settings.sabiMode ? "ON" : "OFF");
 			url.searchParams.set("ChangeMusic", settings.changeMusic ? "ON" : "OFF");
@@ -686,6 +690,9 @@
 			},
 			toggleRandomAttack: function () {
 				toggle("randomAttack");
+			},
+			toggleAdhd: function () {
+				toggle("adhd");
 			},
 			setLove: function () {
 				settings.love = ask("LOVE (1-99)", settings.love, 1, 99);
