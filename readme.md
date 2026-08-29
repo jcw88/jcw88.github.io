@@ -14,24 +14,20 @@
 - Game FPS set to 90 (supports higher values)
 
 #### Settings
-- NoHit: Take no damage
-- NoHeal: Disable player healing
-- SaBiMode: Replace all SFX with "mew mew mew", background music switches to *Underpants BadTom*
-- Custom background music
-- Custom sound effects
-- Disable KR
-- Manually set LOVE level
-- Random Attack mode
-- Adjust game FPS
+- NoHit: 1HP
+- NoHeal: You have no food to eat
+- SaBiMode: Replace all SFX with "mew mew mew", background music switches to Underpants BadTom
+- Custom music
+- Custom SFX
+- NoKR : No KR
+- LOVE : SetLV
+- Random Attack mode : Intro and Final won't
+- FPS : Set FPS(Affects Damage and Player Speed)
 
 #### Hotkeys
 - `R` — Retry battle
 - `ESC` — Return to main menu
 - `]` — Skip current attack round
-
-### Special Thanks
-1. Toby Fox (Creator of Undertale)
-2. jcw87 (Author of original Bad Time Simulator)
 
 ---
 
@@ -50,21 +46,17 @@
 - 游戏帧率设置为90（支持更高帧率）
 
 #### 设置选项
-- 无伤：不会受到伤害
-- 禁止回血：关闭玩家回血功能
-- SaBi模式：全部音效替换为“mew mew mew”，背景音乐切换为 *Underpants BadTom*
+- NoHit :一碰就死
+- NoHeal：关闭玩家回血功能
+- SaBi Mode(傻逼模式)：全部音效替换为喵喵喵，背景音乐切换为 Underpants BadTom
 - 自定义背景音乐
 - 自定义音效
-- 关闭KR效果
-- 手动设置LOVE等级
-- 随机攻击模式
-- 修改游戏帧率
+- NoKR : 当你漏掉了一只怪(没有KR了) 
+- LOVE : 设置LOVE 
+- Random Attack : 每次攻击随机，开头和结尾不变
+- FPS : 改FPS,这会影响Boss伤害，玩家移速等
 
 #### 快捷键
 - `R` — 重新开始战斗
 - `ESC` — 返回主菜单
 - `]` — 跳过当前攻击回合
-
-### 特别感谢
-1. Toby Fox（Undertale 原作创作者）
-2. jcw87（原版 Bad Time Simulator 作者）
