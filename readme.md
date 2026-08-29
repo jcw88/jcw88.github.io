@@ -27,6 +27,7 @@
 
 #### Custom attacks
 - Custom attack > Make attack: write an attack in the browser, with the command list, a checker and one click to load it into the game
+- Drop any of sans' own attacks straight into the editor to start from it or stitch several together
 
 #### Hotkeys
 - `R` — Retry battle
@@ -63,6 +64,7 @@
 
 #### 自定义攻击
 - Custom attack > Make attack：直接在网页里写攻击，带指令列表、语法检查，一键加载进游戏
+- 可以直接把原版的攻击加进编辑器，拿来改或者拼在一起
 
 #### 快捷键
 - `R` — 重新开始战斗

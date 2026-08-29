@@ -124,6 +124,17 @@
 			width: 290px;
 			min-width: 290px;
 		}
+		#amPreset {
+			border: 0;
+			border-bottom: 2px solid #fff;
+			padding: 6px 8px;
+			background: #000;
+			color: #ffb03b;
+			font: 13px "Courier New", monospace;
+		}
+		#amPreset:focus {
+			outline: none;
+		}
 		#amSearch {
 			border: 0;
 			border-bottom: 2px solid #fff;
@@ -222,6 +233,9 @@
 					<div id="amStatus"></div>
 				</div>
 				<div class="amSide">
+					<select id="amPreset">
+						<option value="">add one of sans' own attacks...</option>
+					</select>
 					<input id="amSearch" type="text" placeholder="search commands" autocomplete="off" />
 					<div id="amList"></div>
 					<div id="amHelp"></div>
@@ -814,6 +828,7 @@
 		var list = document.getElementById("amList");
 		var help = document.getElementById("amHelp");
 		var search = document.getElementById("amSearch");
+		var preset = document.getElementById("amPreset");
 		var filePicker = document.getElementById("amFile");
 		var attackUrl = "";
 
@@ -870,26 +885,74 @@
 			if (command[0] === ":Label")
 				row = "0,:LabelName";
 
-			var start = text.selectionStart;
+			insertText(row);
+			check();
+		}
+
+		function insertText(block) {
 			var body = text.value;
-			var lineEnd = body.indexOf("\n", start);
+			var lineEnd = body.indexOf("\n", text.selectionStart);
 			if (lineEnd === -1)
 				lineEnd = body.length;
 
 			var head = body.slice(0, lineEnd);
 			if (head && !head.endsWith("\n"))
-				row = "\n" + row;
+				block = "\n" + block;
 
-			text.value = head + row + body.slice(lineEnd);
+			text.value = head + block + body.slice(lineEnd);
 			text.focus();
-			text.selectionStart = text.selectionEnd = head.length + row.length;
-			check();
+			text.selectionStart = text.selectionEnd = head.length + block.length;
+		}
+
+		function note(message, bad) {
+			status.classList.toggle("bad", !!bad);
+			status.textContent = message;
+		}
+
+		// Sans' own attacks sit next to the page as csv files, and offline.js
+		// already lists every one of them, so the picker cannot go stale.
+		function fillPresets() {
+			if (preset.options.length > 1)
+				return;
+
+			fetch("offline.js").then(function (response) {
+				return response.json();
+			}).then(function (manifest) {
+				manifest.fileList.filter(function (name) {
+					return /\.csv$/i.test(name);
+				}).forEach(function (name) {
+					var option = document.createElement("option");
+					option.value = name;
+					option.textContent = name.replace(/\.csv$/i, "");
+					preset.appendChild(option);
+				});
+			}).catch(function () {
+				preset.options[0].textContent = "(could not list the built-in attacks)";
+			});
+		}
+
+		function addPreset(name) {
+			fetch(name).then(function (response) {
+				if (!response.ok)
+					throw new Error(response.status);
+				return response.text();
+			}).then(function (csv) {
+				csv = csv.replace(/\r\n/g, "\n").replace(/\n+$/, "") + "\n";
+				insertText(csv);
+				saveDraft();
+				check();
+				note("added " + (csv.split("\n").length - 1) + " rows from " + name +
+					" - check the EndAttack and any jumps by line number", false);
+			}).catch(function () {
+				note("could not read " + name, true);
+			});
 		}
 
 		function check() {
 			var lines = text.value.split(/\r?\n/);
 			var problems = [];
 			var labels = {};
+			var jumps = [];
 			var ends = false;
 
 			lines.forEach(function (line, index) {
@@ -931,6 +994,10 @@
 				if (name.toLowerCase() === "endattack")
 					ends = true;
 
+				// JMPREL is relative, everything else jumps to a line or a label.
+				if (name.toLowerCase().indexOf("jmp") === 0 && name.toLowerCase() !== "jmprel" && args[0])
+					jumps.push({ line: number, name: name, target: args[0] });
+
 				var required = command[1].length;
 				if (name === "Sound" || name === "SansText")
 					required -= 1;   // the last argument is optional on these two
@@ -942,6 +1009,20 @@
 				});
 				if (untouched.length)
 					problems.push("line " + number + ": " + name + " still has placeholders - " + untouched.join(", "));
+			});
+
+			jumps.forEach(function (jump) {
+				if (jump.target.charAt(0) === "$")
+					return;
+				if (/^[0-9]+$/.test(jump.target)) {
+					var line = parseInt(jump.target, 10);
+					if (line < 1 || line > lines.length)
+						problems.push("line " + jump.line + ": " + jump.name + " goes to line " +
+							line + ", which is outside the attack");
+				} else if (!labels[jump.target]) {
+					problems.push("line " + jump.line + ": " + jump.name + " goes to \"" +
+						jump.target + "\", and there is no such label");
+				}
 			});
 
 			if (!ends)
@@ -973,6 +1054,7 @@
 
 			text.value = draft || TEMPLATE;
 			root.classList.add("open");
+			fillPresets();
 			renderList();
 			check();
 			text.focus();
@@ -1000,6 +1082,12 @@
 			saveDraft();
 		});
 		search.addEventListener("input", renderList);
+		preset.addEventListener("change", function () {
+			var name = this.value;
+			this.selectedIndex = 0;
+			if (name)
+				addPreset(name);
+		});
 
 		document.getElementById("amClose").addEventListener("click", close);
 		document.getElementById("amTemplate").addEventListener("click", function () {
