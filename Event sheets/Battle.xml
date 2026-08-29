@@ -8069,7 +8069,7 @@
                         </action>
                         <action id="-10" name="Add to" sid="622917796290428" type="System">
                             <param id="0" name="Variable">KR</param>
-                            <param id="1" name="Value">Function.Param(1)</param>
+                            <param id="1" name="Value">Function.Param(1) * DamageMultiplier</param>
                         </action>
                         <action id="0" name="Play" sid="2718447344361586" type="Audio">
                             <param id="0" name="Audio file">PlayerDamaged</param>
