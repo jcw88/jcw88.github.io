@@ -497,16 +497,36 @@
 			try {
 				element.playbackRate = 0;
 			} catch (e) {
-				try { element.pause(); } catch (e2) {}
+				// no rate of zero here, so pause it and remember that we did
+				if (!element.paused) {
+					element.badTimePaused = true;
+					try { element.pause(); } catch (e2) {}
+				}
 			}
 		}
 
 		function thawMedia(element) {
-			try {
-				element.playbackRate = 1;
-				if (element.paused)
-					element.play();
-			} catch (e) {}
+			try { element.playbackRate = 1; } catch (e) {}
+
+			// Only restart what we stopped ourselves - never what the fight did.
+			if (element.badTimePaused) {
+				element.badTimePaused = false;
+				try { element.play(); } catch (e) {}
+			}
+		}
+
+		// Nothing from the fight should still be playing once we are back on the
+		// menu.
+		function stopMedia() {
+			tas.media.forEach(function (element) {
+				element.badTimePaused = false;
+				try { element.playbackRate = 1; } catch (e) {}
+				try {
+					element.pause();
+					element.currentTime = 0;
+				} catch (e) {}
+			});
+			tas.media.length = 0;
 		}
 
 		function stepMedia() {
@@ -592,6 +612,8 @@
 		window.BadTimeTAS = {
 			setBattle: function (on) {
 				tas.inBattle = !!on;
+				if (!tas.inBattle)
+					stopMedia();
 				tasSync();
 			},
 			step: tasStep,
