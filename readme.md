@@ -1,10 +1,4 @@
 # Better Bad Time Simulator
-> Version: v0.2   
-> Original by jcw87, Revised by jcw88   
-> Bilibili: https://space.bilibili.com/570384853  
-> Bilibili Acount 招笑-骑士  
->UID:570384853
----
 
 ## English
 ### Changes
@@ -41,11 +35,6 @@
 
 ## 中文
 # 更好的坏时光模拟器
-> 版本：v0.2   
-> 原版作者：jcw87，改版作者：jcw88  
-> B站主页：https://space.bilibili.com/570384853  
-> B站账号 招笑-骑士   
-> UID:570384853
 
 ### 改版内容
 #### 困难模式
